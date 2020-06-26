@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -33,7 +32,7 @@ class HomeFragment : Fragment()
     // =================================
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        DataBindingUtil.inflate<FragmentHomeBinding>(inflater, R.layout.fragment_home, container, false).let {
+        FragmentHomeBinding.inflate(inflater, container, false).let {
             binding = it
             binding.lifecycleOwner = this.viewLifecycleOwner
             binding.executePendingBindings()

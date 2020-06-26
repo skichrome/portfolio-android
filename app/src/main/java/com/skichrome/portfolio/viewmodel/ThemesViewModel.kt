@@ -1,6 +1,5 @@
 package com.skichrome.portfolio.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.skichrome.portfolio.R
 import com.skichrome.portfolio.model.base.ThemesRepository
@@ -21,6 +20,12 @@ class ThemesViewModel(private val repository: ThemesRepository) : ViewModel()
     private val _errorMsgReference = MutableLiveData<Event<Int>>()
     val errorMsgReference: LiveData<Event<Int>> = _errorMsgReference
 
+    private val _themeClickEvent = MutableLiveData<Event<String>>()
+    val themeClickEvent: LiveData<Event<String>> = _themeClickEvent
+
+    private val _themeLongClickEvent = MutableLiveData<Event<String>>()
+    val themeLongClickEvent: LiveData<Event<String>> = _themeLongClickEvent
+
     init
     {
         loadThemes()
@@ -32,12 +37,12 @@ class ThemesViewModel(private val repository: ThemesRepository) : ViewModel()
 
     fun onClick(themeId: String)
     {
-        Log.e("ThemesVM", "Theme id : $themeId")
+        _themeClickEvent.value = Event(themeId)
     }
 
     fun onLongClick(themeId: String)
     {
-        Log.e("ThemesVM", "Theme id long click : $themeId")
+        _themeLongClickEvent.value = Event(themeId)
     }
 
     private fun showMessage(msgRef: Int)

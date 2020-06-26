@@ -29,5 +29,19 @@
         android:id="@+id/themesFragment"
         android:name="com.skichrome.portfolio.view.fragments.ThemesFragment"
         android:label="ThemesFragment"
-        tools:layout="@layout/fragment_themes" />
+        tools:layout="@layout/fragment_themes">
+        <action
+            android:id="@+id/action_themesFragment_to_categoriesFragment"
+            app:destination="@id/categoriesFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/categoriesFragment"
+        android:name="com.skichrome.portfolio.view.fragments.CategoriesFragment"
+        android:label="CategoriesFragment"
+        tools:layout="@layout/fragment_categories">
+        <argument
+            android:name="themeId"
+            app:argType="string" />
+    </fragment>
 </navigation>

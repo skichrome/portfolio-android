@@ -6,11 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.skichrome.portfolio.PortfolioApplication
 import com.skichrome.portfolio.databinding.FragmentThemesBinding
 import com.skichrome.portfolio.util.AutoClearedValue
 import com.skichrome.portfolio.util.EventObserver
 import com.skichrome.portfolio.util.snackBar
+import com.skichrome.portfolio.util.toast
 import com.skichrome.portfolio.view.ui.ThemesAdapter
 import com.skichrome.portfolio.viewmodel.ThemesViewModel
 import com.skichrome.portfolio.viewmodel.ThemesViewModelFactory
@@ -53,6 +55,8 @@ class ThemesFragment : Fragment()
     private fun configureViewModel()
     {
         viewModel.errorMsgReference.observe(viewLifecycleOwner, EventObserver { binding.root.snackBar(getString(it)) })
+        viewModel.themeClickEvent.observe(viewLifecycleOwner, EventObserver { navigateToCategoriesFragment(it) })
+        viewModel.themeLongClickEvent.observe(viewLifecycleOwner, EventObserver { editOrDeleteTheme(it) })
     }
 
     private fun configureBinding()
@@ -68,5 +72,16 @@ class ThemesFragment : Fragment()
 
     private fun configureFAB()
     {
+    }
+
+    private fun editOrDeleteTheme(themeId: String)
+    {
+        toast("Feature not implemented, theme id : $themeId")
+    }
+
+    private fun navigateToCategoriesFragment(themeId: String)
+    {
+        val opts = ThemesFragmentDirections.actionThemesFragmentToCategoriesFragment(themeId)
+        findNavController().navigate(opts)
     }
 }

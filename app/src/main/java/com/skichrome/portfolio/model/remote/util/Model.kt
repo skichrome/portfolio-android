@@ -5,7 +5,7 @@ import com.google.firebase.firestore.IgnoreExtraProperties
 
 @Suppress("UNCHECKED_CAST")
 @IgnoreExtraProperties
-open class Model
+abstract class Model
 {
     @Exclude
     var id: String = ""

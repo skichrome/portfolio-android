@@ -21,4 +21,9 @@
     <string name="themes_fragment_themes_fetch_success">Successfully fetched themes</string>
     <string name="themes_fragment_themes_fetch_error">An error occurred when fetching all themes</string>
     <string name="rv_item_fragment_themes_img_content_desc">Theme picture</string>
+
+    <!-- Category -->
+    <string name="categories_fragment_themes_fetch_success">Successfully fetched categories</string>
+    <string name="categories_fragment_themes_fetch_error">An error occurred when fetching all categories</string>
+    <string name="rv_item_fragment_categories_img_content_desc">Category picture</string>
 </resources>
