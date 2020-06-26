@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="theme"
+            type="com.skichrome.portfolio.model.remote.util.Theme" />
+
+        <variable
+            name="viewModel"
+            type="com.skichrome.portfolio.viewmodel.ThemesViewModel" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.onClick(theme.id)}"
+            android:padding="@dimen/rv_items_layout_padding">
+
+            <ImageView
+                android:id="@+id/rv_item_fragment_themes_img"
+                android:layout_width="@dimen/rv_items_img_size"
+                android:layout_height="@dimen/rv_items_img_size"
+                android:contentDescription="@string/rv_item_fragment_themes_img_content_desc"
+                android:src="@mipmap/ic_launcher"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/rv_item_fragment_themes_title"
+                style="@style/TextAppearance.AppCompat.Title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/tv_input_margin"
+                android:text="@{theme.name}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/rv_item_fragment_themes_img"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Theme title" />
+
+            <TextView
+                android:id="@+id/rv_item_fragment_themes_content"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/tv_input_margin"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:text="@{theme.description}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/rv_item_fragment_themes_img"
+                app:layout_constraintTop_toBottomOf="@+id/rv_item_fragment_themes_title"
+                tools:text="Theme content" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

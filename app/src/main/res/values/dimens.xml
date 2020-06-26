@@ -11,4 +11,8 @@
     <dimen name="tv_input_margin">8dp</dimen>
 
     <dimen name="profile_fragment_img_margin">50dp</dimen>
+
+    <dimen name="fab_margin">24dp</dimen>
+    <dimen name="rv_items_layout_padding">8dp</dimen>
+    <dimen name="rv_items_img_size">80dp</dimen>
 </resources>

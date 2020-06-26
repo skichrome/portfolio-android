@@ -1,4 +1,4 @@
-package com.skichrome.portfolio.model.local.util
+package com.skichrome.portfolio.model.remote.util
 
 import com.google.firebase.firestore.PropertyName
 
@@ -9,7 +9,7 @@ data class User(
     @JvmField @PropertyName("email") val email: String,
     @JvmField @PropertyName("phone_number") val phoneNumber: String,
     @JvmField @PropertyName("photo_reference") val photoReference: String?
-)
+) : Model()
 {
     constructor() : this("", "", "", "", "", null)
 }

@@ -3,7 +3,7 @@ package com.skichrome.portfolio.viewmodel
 import androidx.lifecycle.*
 import com.skichrome.portfolio.R
 import com.skichrome.portfolio.model.base.HomeRepository
-import com.skichrome.portfolio.model.local.util.User
+import com.skichrome.portfolio.model.remote.util.User
 import com.skichrome.portfolio.util.Event
 import com.skichrome.portfolio.util.RequestResults.Success
 import kotlinx.coroutines.launch

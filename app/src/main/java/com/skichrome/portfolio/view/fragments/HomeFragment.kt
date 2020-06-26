@@ -67,6 +67,7 @@ class HomeFragment : Fragment()
     private fun configureBtn()
     {
         binding.homeFragmentBtnProfile.setOnClickListener { navigateToProfileFragment() }
+        binding.homeFragmentBtnProjects.setOnClickListener { navigateToThemesFragment() }
     }
 
     private fun loadUserPicture(imgReference: Uri?) = imgReference?.let {
@@ -76,5 +77,10 @@ class HomeFragment : Fragment()
     private fun navigateToProfileFragment()
     {
         findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
+    }
+
+    private fun navigateToThemesFragment()
+    {
+        findNavController().navigate(R.id.action_homeFragment_to_themesFragment)
     }
 }

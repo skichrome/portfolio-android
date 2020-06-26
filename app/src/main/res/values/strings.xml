@@ -16,4 +16,9 @@
     <string name="profile_fragment_hint_email">Email</string>
     <string name="profile_fragment_hint_phone">Phone Number</string>
     <string name="profile_fragment_hint_summary">Summary</string>
+
+    <!-- Theme -->
+    <string name="themes_fragment_themes_fetch_success">Successfully fetched themes</string>
+    <string name="themes_fragment_themes_fetch_error">An error occurred when fetching all themes</string>
+    <string name="rv_item_fragment_themes_img_content_desc">Theme picture</string>
 </resources>

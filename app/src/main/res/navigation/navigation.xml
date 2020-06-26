@@ -14,6 +14,9 @@
         <action
             android:id="@+id/action_homeFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_themesFragment"
+            app:destination="@id/themesFragment" />
     </fragment>
 
     <fragment
@@ -21,4 +24,10 @@
         android:name="com.skichrome.portfolio.view.fragments.ProfileFragment"
         android:label="ProfileFragment"
         tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/themesFragment"
+        android:name="com.skichrome.portfolio.view.fragments.ThemesFragment"
+        android:label="ThemesFragment"
+        tools:layout="@layout/fragment_themes" />
 </navigation>
