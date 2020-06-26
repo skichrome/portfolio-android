@@ -13,4 +13,14 @@
         <item name="android:background">@color/colorPrimary</item>
         <item name="titleTextColor">@android:color/white</item>
     </style>
+
+    <!-- Button Style -->
+    <style name="Portfolio.ButtonStyle" parent="AppTheme">
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+        <item name="android:background">@drawable/btn_radius_primary_color</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:layout_marginBottom">@dimen/buttons_margin</item>
+        <item name="android:paddingStart">@dimen/buttons_padding_horizontal</item>
+        <item name="android:paddingEnd">@dimen/buttons_padding_horizontal</item>
+    </style>
 </resources>

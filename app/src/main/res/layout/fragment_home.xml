@@ -1,9 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.fragments.HomeFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-</FrameLayout>
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.skichrome.portfolio.viewmodel.HomeViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.fragments.HomeFragment">
+
+        <ImageView
+            android:id="@+id/home_fragment_user_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/home_fragment_profile_picture_content_desc"
+            app:layout_constraintBottom_toTopOf="@+id/home_fragment_guideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:src="@mipmap/ic_launcher" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/home_fragment_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.3" />
+
+        <TextView
+            android:id="@+id/home_fragment_user_name"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.user.firstName + viewModel.user.lastName}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/home_fragment_user_img"
+            tools:text="John Doe" />
+
+        <TextView
+            android:id="@+id/home_fragment_user_email"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.user.email}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/home_fragment_user_name"
+            tools:text="john.doe@testmail.io" />
+
+        <Button
+            android:id="@+id/home_fragment_btn_profile"
+            style="@style/Portfolio.ButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/home_fragment_profile_btn"
+            app:layout_constraintBottom_toTopOf="@+id/home_fragment_btn_projects"
+            app:layout_constraintEnd_toEndOf="@+id/home_fragment_btn_projects"
+            app:layout_constraintStart_toStartOf="@+id/home_fragment_btn_projects" />
+
+        <Button
+            android:id="@+id/home_fragment_btn_projects"
+            style="@style/Portfolio.ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/home_fragment_project_btn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

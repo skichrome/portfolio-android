@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Portfolio</string>
+
+    <!-- Home -->
+    <string name="home_view_model_user_fetch_success">Successfully fetched user info</string>
+    <string name="home_view_model_user_fetch_error">An error occurred when fetching user info</string>
+    <string name="home_fragment_profile_picture_content_desc">profile picture</string>
+    <string name="home_fragment_profile_btn">Profile</string>
+    <string name="home_fragment_project_btn">Projects</string>
 </resources>
