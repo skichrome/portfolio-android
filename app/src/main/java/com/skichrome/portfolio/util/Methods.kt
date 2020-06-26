@@ -1,10 +1,12 @@
 package com.skichrome.portfolio.util
 
 import android.app.Activity
+import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
@@ -14,10 +16,14 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
+import com.skichrome.portfolio.R
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -53,42 +59,42 @@ fun RecyclerView.addGridLayoutManager(isTablet: Boolean = false, spanCount: Int 
     layoutManager = mLayoutManager
 }
 
-//// --- ImageView Methods --- //
-//
-//fun ImageView.loadPhotoWithGlide(photoReference: String)
-//{
-//    val cornerRadius = resources.getDimensionPixelSize(R.dimen.glide_img_corner_radius)
-//    val requestOptions = RequestOptions.bitmapTransform(RoundedCorners(cornerRadius))
-//    Glide.with(context)
-//        .load(photoReference)
-//        .centerCrop()
-//        .apply(requestOptions)
-//        .error(ContextCompat.getDrawable(context, R.drawable.easy_vgp_icon))
-//        .into(this)
-//}
-//
-//fun ImageView.loadPhotoWithGlide(photoReference: Bitmap)
-//{
-//    val cornerRadius = resources.getDimensionPixelSize(R.dimen.glide_img_corner_radius)
-//    val requestOptions = RequestOptions.bitmapTransform(RoundedCorners(cornerRadius))
-//    Glide.with(context)
-//        .load(photoReference)
-//        .centerCrop()
-//        .apply(requestOptions)
-//        .error(ContextCompat.getDrawable(context, R.drawable.easy_vgp_icon))
-//        .into(this)
-//}
-//
-//fun ImageView.loadPhotoWithGlide(photoReference: Uri)
-//{
-//    val cornerRadius = resources.getDimensionPixelSize(R.dimen.glide_img_corner_radius)
-//    val requestOptions = RequestOptions.bitmapTransform(RoundedCorners(cornerRadius))
-//    Glide.with(context)
-//        .load(photoReference)
-//        .centerCrop()
-//        .apply(requestOptions)
-//        .into(this)
-//}
+// --- ImageView Methods --- //
+
+fun ImageView.loadPhotoWithGlide(photoReference: String)
+{
+    val cornerRadius = resources.getDimensionPixelSize(R.dimen.glide_img_corner_radius)
+    val requestOptions = RequestOptions.bitmapTransform(RoundedCorners(cornerRadius))
+    Glide.with(context)
+        .load(photoReference)
+        .centerCrop()
+        .apply(requestOptions)
+        .error(ContextCompat.getDrawable(context, R.mipmap.ic_launcher))
+        .into(this)
+}
+
+fun ImageView.loadPhotoWithGlide(photoReference: Bitmap)
+{
+    val cornerRadius = resources.getDimensionPixelSize(R.dimen.glide_img_corner_radius)
+    val requestOptions = RequestOptions.bitmapTransform(RoundedCorners(cornerRadius))
+    Glide.with(context)
+        .load(photoReference)
+        .centerCrop()
+        .apply(requestOptions)
+        .error(ContextCompat.getDrawable(context, R.mipmap.ic_launcher))
+        .into(this)
+}
+
+fun ImageView.loadPhotoWithGlide(photoReference: Uri)
+{
+    val cornerRadius = resources.getDimensionPixelSize(R.dimen.glide_img_corner_radius)
+    val requestOptions = RequestOptions.bitmapTransform(RoundedCorners(cornerRadius))
+    Glide.with(context)
+        .load(photoReference)
+        .centerCrop()
+        .apply(requestOptions)
+        .into(this)
+}
 
 // --- View methods --- //
 

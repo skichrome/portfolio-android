@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/profile_fragment_user_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/profile_fragment_img_margin"
+            android:layout_marginTop="@dimen/profile_fragment_img_margin"
+            android:layout_marginEnd="@dimen/profile_fragment_img_margin"
+            android:contentDescription="@string/home_fragment_profile_picture_content_desc"
+            android:src="@mipmap/ic_launcher"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/profile_fragment_img_update_btn"
+            style="@style/PortfolioTheme.ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/buttons_margin_top_high"
+            android:text="@string/profile_fragment_btn_update_img"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_fragment_user_img" />
+
+        <TextView
+            android:id="@+id/profile_fragment_title"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/profile_fragment_img_margin"
+            android:text="@string/profile_fragment_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profile_fragment_img_update_btn" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/profile_fragment_user_first_name"
+            style="@style/PortfolioTheme.editTextInputLayoutStyle"
+            android:layout_width="0dp"
+            android:layout_marginStart="@dimen/tv_input_margin"
+            app:layout_constraintEnd_toStartOf="@+id/profile_fragment_user_last_name"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profile_fragment_title">
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/PortfolioTheme.editTextInputStyle"
+                android:hint="@string/profile_fragment_hint_first_name"
+                tools:text="Doe" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/profile_fragment_user_last_name"
+            style="@style/PortfolioTheme.editTextInputLayoutStyle"
+            android:layout_width="0dp"
+            android:layout_marginStart="@dimen/tv_input_margin"
+            android:layout_marginEnd="@dimen/tv_input_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/profile_fragment_user_first_name"
+            app:layout_constraintTop_toBottomOf="@+id/profile_fragment_title">
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/PortfolioTheme.editTextInputStyle"
+                android:hint="@string/profile_fragment_hint_last_name"
+                tools:text="John" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/profile_fragment_user_email"
+            style="@style/PortfolioTheme.editTextInputLayoutStyle"
+            android:layout_width="0dp"
+            android:layout_marginStart="@dimen/tv_input_margin"
+            android:layout_marginEnd="@dimen/tv_input_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profile_fragment_user_first_name">
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/PortfolioTheme.editTextInputStyle"
+                android:hint="@string/profile_fragment_hint_email"
+                tools:text="john.doe@fakemail.com" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/profile_fragment_user_phone"
+            style="@style/PortfolioTheme.editTextInputLayoutStyle"
+            android:layout_width="0dp"
+            android:layout_marginStart="@dimen/tv_input_margin"
+            android:layout_marginEnd="@dimen/tv_input_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profile_fragment_user_email">
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/PortfolioTheme.editTextInputStyle"
+                android:hint="@string/profile_fragment_hint_phone"
+                tools:text="+33707070707" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/profile_fragment_user_summary"
+            style="@style/PortfolioTheme.editTextInputLayoutStyle"
+            android:layout_width="0dp"
+            android:layout_marginStart="@dimen/tv_input_margin"
+            android:layout_marginEnd="@dimen/tv_input_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profile_fragment_user_phone">
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/PortfolioTheme.editTextInputStyle"
+                android:hint="@string/profile_fragment_hint_summary"
+                android:inputType="textMultiLine"
+                tools:text="lorem ipsum dolor sit amet." />
+        </com.google.android.material.textfield.TextInputLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

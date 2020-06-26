@@ -7,4 +7,13 @@
     <string name="home_fragment_profile_picture_content_desc">profile picture</string>
     <string name="home_fragment_profile_btn">Profile</string>
     <string name="home_fragment_project_btn">Projects</string>
+
+    <!-- Profile -->
+    <string name="profile_fragment_title">User information</string>
+    <string name="profile_fragment_btn_update_img">Update picture</string>
+    <string name="profile_fragment_hint_last_name">Last Name</string>
+    <string name="profile_fragment_hint_first_name">First Name</string>
+    <string name="profile_fragment_hint_email">Email</string>
+    <string name="profile_fragment_hint_phone">Phone Number</string>
+    <string name="profile_fragment_hint_summary">Summary</string>
 </resources>

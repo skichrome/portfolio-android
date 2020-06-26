@@ -21,10 +21,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/home_fragment_profile_picture_content_desc"
+            android:src="@mipmap/ic_launcher"
             app:layout_constraintBottom_toTopOf="@+id/home_fragment_guideline"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:src="@mipmap/ic_launcher" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/home_fragment_guideline"
@@ -38,7 +38,7 @@
             style="@style/TextAppearance.AppCompat.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.user.firstName + viewModel.user.lastName}"
+            android:text='@{viewModel.user.firstName.concat(" ").concat(viewModel.user.lastName)}'
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/home_fragment_user_img"
@@ -57,7 +57,7 @@
 
         <Button
             android:id="@+id/home_fragment_btn_profile"
-            style="@style/Portfolio.ButtonStyle"
+            style="@style/PortfolioTheme.ButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/home_fragment_profile_btn"
@@ -67,7 +67,7 @@
 
         <Button
             android:id="@+id/home_fragment_btn_projects"
-            style="@style/Portfolio.ButtonStyle"
+            style="@style/PortfolioTheme.ButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/home_fragment_project_btn"

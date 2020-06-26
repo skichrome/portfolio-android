@@ -4,4 +4,11 @@
     <dimen name="buttons_margin">10dp</dimen>
     <dimen name="buttons_padding">10dp</dimen>
     <dimen name="buttons_padding_horizontal">60dp</dimen>
+    <dimen name="buttons_margin_top_high">16dp</dimen>
+
+    <dimen name="glide_img_corner_radius">6dp</dimen>
+
+    <dimen name="tv_input_margin">8dp</dimen>
+
+    <dimen name="profile_fragment_img_margin">50dp</dimen>
 </resources>

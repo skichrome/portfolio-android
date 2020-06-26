@@ -9,18 +9,31 @@
     </style>
 
     <!-- Toolbar Style -->
-    <style name="Portfolio.ToolbarStyle" parent="AppTheme">
+    <style name="PortfolioTheme.ToolbarStyle" parent="AppTheme">
         <item name="android:background">@color/colorPrimary</item>
         <item name="titleTextColor">@android:color/white</item>
     </style>
 
     <!-- Button Style -->
-    <style name="Portfolio.ButtonStyle" parent="AppTheme">
+    <style name="PortfolioTheme.ButtonStyle" parent="AppTheme">
         <item name="android:foreground">?android:attr/selectableItemBackground</item>
         <item name="android:background">@drawable/btn_radius_primary_color</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:layout_marginBottom">@dimen/buttons_margin</item>
         <item name="android:paddingStart">@dimen/buttons_padding_horizontal</item>
         <item name="android:paddingEnd">@dimen/buttons_padding_horizontal</item>
+    </style>
+
+    <!-- EditTextInputLayout style -->
+    <style name="PortfolioTheme.editTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/tv_input_margin</item>
+    </style>
+
+    <!-- EditTextInput style -->
+    <style name="PortfolioTheme.editTextInputStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:inputType">text</item>
     </style>
 </resources>
