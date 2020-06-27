@@ -2,10 +2,12 @@ package com.skichrome.portfolio.util
 
 import com.skichrome.portfolio.model.DefaultCategoriesRepository
 import com.skichrome.portfolio.model.DefaultHomeRepository
+import com.skichrome.portfolio.model.DefaultProjectsRepository
 import com.skichrome.portfolio.model.DefaultThemesRepository
 import com.skichrome.portfolio.model.base.*
 import com.skichrome.portfolio.model.remote.RemoteCategoriesSource
 import com.skichrome.portfolio.model.remote.RemoteHomeSource
+import com.skichrome.portfolio.model.remote.RemoteProjectsSource
 import com.skichrome.portfolio.model.remote.RemoteThemesSource
 
 object ServiceLocator
@@ -49,4 +51,16 @@ object ServiceLocator
     }
 
     fun getCategoriesRepository(): CategoriesRepository = provideCategoriesRepository()
+
+    // --- Projects --- //
+
+    private fun provideRemoteProjectsSource(): ProjectsSource = RemoteProjectsSource()
+
+    private fun provideProjectsRepository(): ProjectsRepository
+    {
+        val remoteSrc = provideRemoteProjectsSource()
+        return DefaultProjectsRepository(remoteSrc)
+    }
+
+    fun getProjectsRepository(): ProjectsRepository = provideProjectsRepository()
 }

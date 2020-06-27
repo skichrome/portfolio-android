@@ -3,8 +3,10 @@ package com.skichrome.portfolio.util
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.skichrome.portfolio.model.remote.util.Category
+import com.skichrome.portfolio.model.remote.util.Project
 import com.skichrome.portfolio.model.remote.util.Theme
 import com.skichrome.portfolio.view.ui.CategoriesAdapter
+import com.skichrome.portfolio.view.ui.ProjectsAdapter
 import com.skichrome.portfolio.view.ui.ThemesAdapter
 
 @BindingAdapter(value = ["items_themes"])
@@ -15,4 +17,9 @@ fun setThemes(listView: RecyclerView, themes: List<Theme>?) = themes?.let {
 @BindingAdapter(value = ["items_categories"])
 fun setCategories(listView: RecyclerView, categories: List<Category>?) = categories?.let {
     (listView.adapter as CategoriesAdapter).submitList(categories)
+}
+
+@BindingAdapter(value = ["items_projects"])
+fun setProjects(listView: RecyclerView, categories: List<Project>?) = categories?.let {
+    (listView.adapter as ProjectsAdapter).submitList(categories)
 }

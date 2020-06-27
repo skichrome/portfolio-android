@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.skichrome.portfolio.PortfolioApplication
 import com.skichrome.portfolio.databinding.FragmentCategoriesBinding
@@ -83,6 +84,7 @@ class CategoriesFragment : Fragment()
 
     private fun navigateToProjectsFragment(categoryId: String)
     {
-        toast("Feature not implemented, theme id : $categoryId")
+        val opts = CategoriesFragmentDirections.actionCategoriesFragmentToProjectsFragment(args.themeId, categoryId)
+        findNavController().navigate(opts)
     }
 }

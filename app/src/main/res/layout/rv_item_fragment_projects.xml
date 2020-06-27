@@ -7,20 +7,20 @@
     <data>
 
         <variable
-            name="category"
-            type="com.skichrome.portfolio.model.remote.util.Category" />
+            name="project"
+            type="com.skichrome.portfolio.model.remote.util.Project" />
 
         <variable
             name="viewModel"
-            type="com.skichrome.portfolio.viewmodel.CategoriesViewModel" />
+            type="com.skichrome.portfolio.viewmodel.ProjectsViewModel" />
     </data>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/rv_item_fragment_categories_card_view"
+        android:id="@+id/rv_item_fragment_projects_card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:foreground="?android:attr/selectableItemBackground"
-        android:onClick="@{() -> viewModel.onClick(category.id)}"
+        android:onClick="@{() -> viewModel.onClick(project.id)}"
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true">
 
@@ -30,25 +30,25 @@
             android:padding="@dimen/rv_items_layout_padding">
 
             <ImageView
-                android:id="@+id/rv_item_fragment_categories_img"
+                android:id="@+id/rv_item_fragment_projects_img"
                 android:layout_width="@dimen/rv_items_img_size"
                 android:layout_height="@dimen/rv_items_img_size"
-                android:contentDescription="@string/rv_item_fragment_categories_img_content_desc"
+                android:contentDescription="@string/categories_fragment_projects_img_content_desc"
                 android:src="@mipmap/ic_launcher"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/rv_item_fragment_categories_title"
+                android:id="@+id/rv_item_fragment_projects_title"
                 style="@style/TextAppearance.AppCompat.Title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/tv_input_margin"
-                android:text="@{category.name}"
+                android:text="@{project.title}"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/rv_item_fragment_categories_img"
+                app:layout_constraintStart_toEndOf="@+id/rv_item_fragment_projects_img"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Category title" />
+                tools:text="Project title" />
 
             <TextView
                 android:id="@+id/rv_item_fragment_projects_content"
@@ -57,12 +57,12 @@
                 android:layout_marginStart="@dimen/tv_input_margin"
                 android:ellipsize="end"
                 android:maxLines="3"
-                android:text="@{category.description}"
+                android:text=""
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/rv_item_fragment_categories_img"
-                app:layout_constraintTop_toBottomOf="@+id/rv_item_fragment_categories_title"
-                tools:text="Category content" />
+                app:layout_constraintStart_toEndOf="@id/rv_item_fragment_projects_img"
+                app:layout_constraintTop_toBottomOf="@+id/rv_item_fragment_projects_title"
+                tools:text="Project content" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

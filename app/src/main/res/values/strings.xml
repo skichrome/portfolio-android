@@ -26,4 +26,9 @@
     <string name="categories_fragment_themes_fetch_success">Successfully fetched categories</string>
     <string name="categories_fragment_themes_fetch_error">An error occurred when fetching all categories</string>
     <string name="rv_item_fragment_categories_img_content_desc">Category picture</string>
+
+    <!-- Project -->
+    <string name="categories_fragment_projects_fetch_success">Successfully fetched projects</string>
+    <string name="categories_fragment_projects_fetch_error">An error occurred when fetching all projects</string>
+    <string name="categories_fragment_projects_img_content_desc">Project main picture</string>
 </resources>
