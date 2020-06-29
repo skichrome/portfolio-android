@@ -38,6 +38,7 @@
                 android:layout_width="@dimen/rv_items_img_size"
                 android:layout_height="@dimen/rv_items_img_size"
                 android:contentDescription="@string/categories_fragment_projects_img_content_desc"
+                android:background="?android:attr/selectableItemBackground"
                 android:src="@mipmap/ic_launcher"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/rv_item_fragment_paragraph_content_title_layout" />

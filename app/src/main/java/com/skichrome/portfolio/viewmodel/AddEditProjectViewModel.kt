@@ -1,6 +1,5 @@
 package com.skichrome.portfolio.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.skichrome.portfolio.R
 import com.skichrome.portfolio.model.base.ProjectsRepository
@@ -70,11 +69,9 @@ class AddEditProjectViewModel(private val repository: ProjectsRepository) : Base
         _paragraphs.value = _paragraphs.value?.apply {
             add(ParagraphContent().withId("${_paragraphs.value?.size ?: 0 + 1}"))
         } ?: mutableListOf(ParagraphContent().withId("0"))
-
-        Log.e("AddProjectVM", "Plist : ${_paragraphs.value?.map { it.id }}")
     }
 
-    fun saveProject(themeId: String, categoryId: String, projectToUpdateId: String?, newProject: Project)
+    fun saveProject(themeId: String, categoryId: String, projectToUpdateId: String?, newProject: Project, photoRef: String?)
     {
         viewModelScope.launch {
             _loading.value = true
@@ -82,7 +79,15 @@ class AddEditProjectViewModel(private val repository: ProjectsRepository) : Base
 
             val result = repository.saveProject(themeId, categoryId, projectToUpdateId, newProject)
             if (result is Success)
-                _loading.value = false
+            {
+                photoRef?.let {
+                    val photoResult = repository.uploadProjectImage(themeId, categoryId, result.data, photoRef)
+                    if (photoResult is Success)
+                        _loading.value = false
+                    else
+                        showMessage(R.string.add_edit_project_view_model_project_upload_img_error)
+                } ?: _loading.apply { this.value = false }
+            }
             else
                 showMessage(R.string.add_edit_project_view_model_project_insert_error)
         }

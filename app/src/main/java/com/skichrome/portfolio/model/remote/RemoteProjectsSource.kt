@@ -1,7 +1,12 @@
 package com.skichrome.portfolio.model.remote
 
+import android.net.Uri
 import android.util.Log
+import androidx.core.net.toUri
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
+import com.google.firebase.storage.ktx.storageMetadata
 import com.skichrome.portfolio.model.base.ProjectsSource
 import com.skichrome.portfolio.model.remote.util.ParagraphContent
 import com.skichrome.portfolio.model.remote.util.Project
@@ -11,6 +16,7 @@ import com.skichrome.portfolio.util.RequestResults.Success
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.io.File
 
 class RemoteProjectsSource(private val dispatcher: CoroutineDispatcher = Dispatchers.IO) : ProjectsSource
 {
@@ -21,6 +27,9 @@ class RemoteProjectsSource(private val dispatcher: CoroutineDispatcher = Dispatc
     private val themesReference = FirebaseFirestore.getInstance().collection(ROOT_COLLECTION)
         .document(CURRENT_VERSION)
         .collection(THEMES_COLLECTION)
+
+    private val storage = Firebase.storage
+    private val mediaReference = storage.reference.child(PROJECTS_COLLECTION)
 
     // =================================
     //        Superclass Methods
@@ -69,7 +78,7 @@ class RemoteProjectsSource(private val dispatcher: CoroutineDispatcher = Dispatc
                         .document(id)
                         .set(project)
                         .await()
-                    Success(project.id)
+                    Success(id)
                 }
                     ?: getProjectsReference(themeId, categoryId)
                         .add(project)
@@ -80,9 +89,59 @@ class RemoteProjectsSource(private val dispatcher: CoroutineDispatcher = Dispatc
             }
             catch (e: Exception)
             {
-                Log.e("RemoteProjectsSrc", "Could not save project with id ${project.id}", e)
+                Log.e("RemoteProjectsSrc", "Could not save project with id ${project.id} / $projectToUpdateId", e)
                 Error(e)
             }
+        }
+
+    override suspend fun uploadProjectImage(themeId: String, categoryId: String, projectId: String, localRef: String): RequestResults<Uri> =
+        withContext(dispatcher) {
+            val localFile = File(localRef).toUri()
+            val newRef = mediaReference.child("$projectId/${localFile.path?.split("/")?.last().toString()}")
+
+            val metadata = storageMetadata {
+                contentType = "image/jpg"
+            }
+            return@withContext try
+            {
+                val result = newRef.putFile(localFile, metadata)
+                    .continueWithTask { task ->
+                        if (!task.isSuccessful)
+                            task.exception?.let { throw it }
+                        newRef.downloadUrl
+                    }
+                    .await()
+                suppressImageIfExists(themeId, categoryId, projectId)
+                updateFirestoreWithImgRemoteUri(themeId, categoryId, projectId, result)
+                Success(result)
+            }
+            catch (e: Exception)
+            {
+                Log.e("RemoteProjectsSrc", "Could not upload picture to storage", e)
+                Error(e)
+            }
+        }
+
+    private suspend fun suppressImageIfExists(themeId: String, categoryId: String, projectId: String) = withContext(dispatcher) {
+        getProjectsReference(themeId, categoryId)
+            .document(projectId)
+            .get()
+            .await()
+            .toObject(Project::class.java)
+            ?.mainPicture
+            ?.let { remotePictureRef ->
+                storage.getReferenceFromUrl(remotePictureRef)
+                    .delete()
+                    .await()
+            }
+    }
+
+    private suspend fun updateFirestoreWithImgRemoteUri(themeId: String, categoryId: String, projectId: String, remoteUri: Uri) =
+        withContext(dispatcher) {
+            getProjectsReference(themeId, categoryId)
+                .document(projectId)
+                .update(mapOf("main_picture" to remoteUri.toString()))
+                .await()
         }
 
     // =================================

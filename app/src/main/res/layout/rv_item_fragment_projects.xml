@@ -57,7 +57,7 @@
                 android:layout_marginStart="@dimen/tv_input_margin"
                 android:ellipsize="end"
                 android:maxLines="3"
-                android:text=""
+                android:text="@{project.description}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/rv_item_fragment_projects_img"

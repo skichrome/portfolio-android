@@ -1,5 +1,6 @@
 package com.skichrome.portfolio.model
 
+import android.net.Uri
 import com.skichrome.portfolio.model.base.ProjectsRepository
 import com.skichrome.portfolio.model.base.ProjectsSource
 import com.skichrome.portfolio.model.remote.util.Project
@@ -19,4 +20,7 @@ class DefaultProjectsRepository(private val remoteSrc: ProjectsSource) : Project
 
     override suspend fun saveProject(themeId: String, categoryId: String, projectToUpdateId: String?, project: Project): RequestResults<String> =
         remoteSrc.saveProject(themeId, categoryId, projectToUpdateId, project)
+
+    override suspend fun uploadProjectImage(themeId: String, categoryId: String, projectId: String, localRef: String): RequestResults<Uri> =
+        remoteSrc.uploadProjectImage(themeId, categoryId, projectId, localRef)
 }

@@ -1,11 +1,15 @@
 package com.skichrome.portfolio.view.ui
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.skichrome.portfolio.R
 import com.skichrome.portfolio.databinding.RvItemFragmentProjectsBinding
 import com.skichrome.portfolio.model.remote.util.Project
+import com.skichrome.portfolio.util.loadPhotoWithGlide
 import com.skichrome.portfolio.viewmodel.ProjectsViewModel
 
 class ProjectsAdapter(private val viewModel: ProjectsViewModel) :
@@ -29,8 +33,9 @@ class ProjectsAdapter(private val viewModel: ProjectsViewModel) :
             }
             binding.viewModel = viewModel
             binding.project = project
-
-            //Todo màj photo du Projet avec glide
+            project.mainPicture?.let { imgRef ->
+                binding.rvItemFragmentProjectsImg.loadPhotoWithGlide(Uri.parse(imgRef))
+            } ?: Glide.with(binding.root).load(R.drawable.ic_baseline_image_24).into(binding.rvItemFragmentProjectsImg)
         }
     }
 }
