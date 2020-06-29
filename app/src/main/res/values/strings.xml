@@ -3,6 +3,7 @@
 
     <!-- Menu -->
     <string name="menu_item_new_paragraph">New paragraph</string>
+    <string name="menu_item_logout">Logout</string>
 
     <!-- Home -->
     <string name="home_view_model_user_fetch_success">Successfully fetched user info</string>

@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "913590700037-5llch3n33nrpfc1092rftmtvmveolidb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.skichrome.portfolio",
+            "certificate_hash": "749ec9e0e33498bcc50b5fb5c973456110429c99"
+          }
+        },
+        {
           "client_id": "913590700037-u7t3mpripji7he6amml49d8u2tdr6odm.apps.googleusercontent.com",
           "client_type": 3
         }

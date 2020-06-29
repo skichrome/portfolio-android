@@ -13,4 +13,12 @@
             app:showAsAction="ifRoom"
             tools:visible="true" />
     </group>
+
+    <group>
+        <item
+            android:id="@+id/activity_main_menu_logout"
+            android:icon="@drawable/ic_baseline_lock_24"
+            android:title="@string/menu_item_logout"
+            app:showAsAction="ifRoom" />
+    </group>
 </menu>
