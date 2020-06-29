@@ -8,7 +8,7 @@ import com.skichrome.portfolio.util.Event
 import com.skichrome.portfolio.util.RequestResults.Success
 import kotlinx.coroutines.launch
 
-class CategoriesViewModel(private val repository: CategoriesRepository) : ViewModel()
+class CategoriesViewModel(private val repository: CategoriesRepository) : BaseViewModel()
 {
     // =================================
     //              Fields
@@ -16,9 +16,6 @@ class CategoriesViewModel(private val repository: CategoriesRepository) : ViewMo
 
     private val _categories = MutableLiveData<List<Category>>()
     val categories: LiveData<List<Category>> = _categories
-
-    private val _errorMsgReference = MutableLiveData<Event<Int>>()
-    val errorMsgReference: LiveData<Event<Int>> = _errorMsgReference
 
     private val _categoryClickEvent = MutableLiveData<Event<String>>()
     val categoryClickEvent: LiveData<Event<String>> = _categoryClickEvent
@@ -38,11 +35,6 @@ class CategoriesViewModel(private val repository: CategoriesRepository) : ViewMo
     fun onLongClick(categoryId: String)
     {
         _categoryLongClickEvent.value = Event(categoryId)
-    }
-
-    private fun showMessage(msgRef: Int)
-    {
-        _errorMsgReference.value = Event(msgRef)
     }
 
     fun loadCategories(themeId: String)

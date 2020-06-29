@@ -57,9 +57,8 @@
 
         <Button
             android:id="@+id/home_fragment_btn_profile"
-            style="@style/PortfolioTheme.ButtonStyle"
+            style="@style/PortfolioTheme.ButtonStyle.Large"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:text="@string/home_fragment_profile_btn"
             app:layout_constraintBottom_toTopOf="@+id/home_fragment_btn_projects"
             app:layout_constraintEnd_toEndOf="@+id/home_fragment_btn_projects"
@@ -67,9 +66,7 @@
 
         <Button
             android:id="@+id/home_fragment_btn_projects"
-            style="@style/PortfolioTheme.ButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/PortfolioTheme.ButtonStyle.Large"
             android:text="@string/home_fragment_project_btn"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

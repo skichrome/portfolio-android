@@ -4,11 +4,10 @@ import androidx.lifecycle.*
 import com.skichrome.portfolio.R
 import com.skichrome.portfolio.model.base.HomeRepository
 import com.skichrome.portfolio.model.remote.util.User
-import com.skichrome.portfolio.util.Event
 import com.skichrome.portfolio.util.RequestResults.Success
 import kotlinx.coroutines.launch
 
-class HomeViewModel(private val repository: HomeRepository) : ViewModel()
+class HomeViewModel(private val repository: HomeRepository) : BaseViewModel()
 {
     // =================================
     //              Fields
@@ -17,17 +16,9 @@ class HomeViewModel(private val repository: HomeRepository) : ViewModel()
     private val _user = MutableLiveData<User>()
     val user: LiveData<User> = _user
 
-    private val _errorMsgReference = MutableLiveData<Event<Int>>()
-    val errorMsgReference: LiveData<Event<Int>> = _errorMsgReference
-
     // =================================
     //              Methods
     // =================================
-
-    private fun showMessage(msgRef: Int)
-    {
-        _errorMsgReference.value = Event(msgRef)
-    }
 
     fun loadUserInfo()
     {

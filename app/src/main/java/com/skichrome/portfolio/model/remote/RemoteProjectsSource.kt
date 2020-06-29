@@ -29,15 +29,55 @@ class RemoteProjectsSource(private val dispatcher: CoroutineDispatcher = Dispatc
         withContext(dispatcher) {
             return@withContext try
             {
-                val result = getProjectsReference(themeId, categoryId)
-                    .get()
-                    .await()
+                val result = getProjectsReference(themeId, categoryId).get().await()
                     .map { it.toObject(Project::class.java).withId<Project>(it.id) }
                 Success(result)
             }
             catch (e: Exception)
             {
                 Log.e("RemoteProjectsSrc", "An Error occurred when fetching Projects", e)
+                Error(e)
+            }
+        }
+
+    override suspend fun getProject(themeId: String, categoryId: String, projectId: String): RequestResults<Project> = withContext(dispatcher) {
+        return@withContext try
+        {
+            val result = getProjectsReference(themeId, categoryId).document(projectId).get().await()
+                .let {
+                    it.toObject(Project::class.java)?.withId<Project>(it.id)
+                        ?: return@withContext Error(FirebaseFirestoreClassCastException("Could not cast data object to Project class"))
+                }
+            Success(result)
+        }
+        catch (e: Exception)
+        {
+            Log.e("RemoteProjectsSrc", "An Error occurred when fetching Project with ID : $projectId", e)
+            Error(e)
+        }
+    }
+
+    override suspend fun saveProject(themeId: String, categoryId: String, projectToUpdateId: String?, project: Project): RequestResults<String> =
+        withContext(dispatcher) {
+            return@withContext try
+            {
+                projectToUpdateId?.let { id ->
+                    getProjectsReference(themeId, categoryId)
+                        .document(id)
+                        .set(project)
+                        .await()
+                    Success(project.id)
+                }
+                    ?: getProjectsReference(themeId, categoryId)
+                        .add(project)
+                        .await()
+                        .let { docRef ->
+                            Success(docRef.id)
+                        }
+            }
+            catch (e: Exception)
+            {
+                Log.e("RemoteProjectsSrc", "Could not save project with id ${project.id}", e)
                 Error(e)
             }
         }

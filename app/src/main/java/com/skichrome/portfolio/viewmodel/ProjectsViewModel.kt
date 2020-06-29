@@ -8,7 +8,7 @@ import com.skichrome.portfolio.util.Event
 import com.skichrome.portfolio.util.RequestResults.Success
 import kotlinx.coroutines.launch
 
-class ProjectsViewModel(private val repository: ProjectsRepository) : ViewModel()
+class ProjectsViewModel(private val repository: ProjectsRepository) : BaseViewModel()
 {
     // =================================
     //              Fields
@@ -16,9 +16,6 @@ class ProjectsViewModel(private val repository: ProjectsRepository) : ViewModel(
 
     private val _projects = MutableLiveData<List<Project>>()
     val projects: LiveData<List<Project>> = _projects
-
-    private val _errorMsgReference = MutableLiveData<Event<Int>>()
-    val errorMsgReference: LiveData<Event<Int>> = _errorMsgReference
 
     private val _projectClickEvent = MutableLiveData<Event<String>>()
     val projectClickEvent: LiveData<Event<String>> = _projectClickEvent
@@ -38,11 +35,6 @@ class ProjectsViewModel(private val repository: ProjectsRepository) : ViewModel(
     fun onLongClick(categoryId: String)
     {
         _projectLongClickEvent.value = Event(categoryId)
-    }
-
-    private fun showMessage(msgRef: Int)
-    {
-        _errorMsgReference.value = Event(msgRef)
     }
 
     fun loadCategories(themeId: String, categoryId: String)

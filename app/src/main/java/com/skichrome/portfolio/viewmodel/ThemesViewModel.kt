@@ -8,7 +8,7 @@ import com.skichrome.portfolio.util.Event
 import com.skichrome.portfolio.util.RequestResults.Success
 import kotlinx.coroutines.launch
 
-class ThemesViewModel(private val repository: ThemesRepository) : ViewModel()
+class ThemesViewModel(private val repository: ThemesRepository) : BaseViewModel()
 {
     // =================================
     //              Fields
@@ -16,9 +16,6 @@ class ThemesViewModel(private val repository: ThemesRepository) : ViewModel()
 
     private val _themes = MutableLiveData<List<Theme>>()
     val themes: LiveData<List<Theme>> = _themes
-
-    private val _errorMsgReference = MutableLiveData<Event<Int>>()
-    val errorMsgReference: LiveData<Event<Int>> = _errorMsgReference
 
     private val _themeClickEvent = MutableLiveData<Event<String>>()
     val themeClickEvent: LiveData<Event<String>> = _themeClickEvent
@@ -43,11 +40,6 @@ class ThemesViewModel(private val repository: ThemesRepository) : ViewModel()
     fun onLongClick(themeId: String)
     {
         _themeLongClickEvent.value = Event(themeId)
-    }
-
-    private fun showMessage(msgRef: Int)
-    {
-        _errorMsgReference.value = Event(msgRef)
     }
 
     private fun loadThemes()

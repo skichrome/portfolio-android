@@ -53,7 +53,7 @@ class HomeFragment : Fragment()
 
     private fun configureViewModel()
     {
-        viewModel.errorMsgReference.observe(viewLifecycleOwner, EventObserver { binding.root.snackBar(getString(it)) })
+        viewModel.message.observe(viewLifecycleOwner, EventObserver { binding.root.snackBar(getString(it)) })
         viewModel.user.observe(viewLifecycleOwner, Observer { loadUserPicture(it?.photoReference?.let { photoRef -> Uri.parse(photoRef) }) })
         viewModel.loadUserInfo()
     }

@@ -15,13 +15,28 @@
     </style>
 
     <!-- Button Style -->
-    <style name="PortfolioTheme.ButtonStyle" parent="AppTheme">
+    <style name="PortfolioTheme.ButtonStyle.Default" parent="AppTheme">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:foreground">?android:attr/selectableItemBackground</item>
         <item name="android:background">@drawable/btn_radius_primary_color</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:layout_marginBottom">@dimen/buttons_margin</item>
         <item name="android:paddingStart">@dimen/buttons_padding_horizontal</item>
         <item name="android:paddingEnd">@dimen/buttons_padding_horizontal</item>
+    </style>
+
+    <!-- FAB Style -->
+    <style name="PortfolioTheme.ButtonStyle.FloatingActionButton" parent="AppTheme">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_marginEnd">@dimen/fab_margin</item>
+        <item name="android:layout_marginBottom">@dimen/fab_margin</item>
+    </style>
+
+    <style name="PortfolioTheme.ButtonStyle.Large" parent="PortfolioTheme.ButtonStyle.Default">
+        <item name="android:paddingStart">@dimen/buttons_high_padding_horizontal</item>
+        <item name="android:paddingEnd">@dimen/buttons_high_padding_horizontal</item>
     </style>
 
     <!-- EditTextInputLayout style -->

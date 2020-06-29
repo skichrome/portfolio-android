@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.skichrome.portfolio.PortfolioApplication
 import com.skichrome.portfolio.databinding.FragmentProjectsBinding
@@ -16,6 +17,7 @@ import com.skichrome.portfolio.util.toast
 import com.skichrome.portfolio.view.ui.ProjectsAdapter
 import com.skichrome.portfolio.viewmodel.ProjectsViewModel
 import com.skichrome.portfolio.viewmodel.ProjectsViewModelFactory
+import kotlinx.android.synthetic.main.fragment_projects.*
 
 class ProjectsFragment : Fragment()
 {
@@ -55,8 +57,8 @@ class ProjectsFragment : Fragment()
 
     private fun configureViewModel()
     {
-        viewModel.errorMsgReference.observe(viewLifecycleOwner, EventObserver { binding.root.snackBar(getString(it)) })
-        viewModel.projectClickEvent.observe(viewLifecycleOwner, EventObserver { toast("Click Not implemented") })
+        viewModel.message.observe(viewLifecycleOwner, EventObserver { binding.root.snackBar(getString(it)) })
+        viewModel.projectClickEvent.observe(viewLifecycleOwner, EventObserver { navigateToAddEditProjectFragment(it) })
         viewModel.projectLongClickEvent.observe(viewLifecycleOwner, EventObserver { toast("Long clic Not implemented") })
         viewModel.loadCategories(args.themeId, args.categoryId)
     }
@@ -74,5 +76,12 @@ class ProjectsFragment : Fragment()
 
     private fun configureFAB()
     {
+        projects_fragment_fab.setOnClickListener { navigateToAddEditProjectFragment() }
+    }
+
+    private fun navigateToAddEditProjectFragment(projectId: String? = null)
+    {
+        val opts = ProjectsFragmentDirections.actionProjectsFragmentToAddEditProjectFragment(args.themeId, args.categoryId, projectId)
+        findNavController().navigate(opts)
     }
 }

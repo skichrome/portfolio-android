@@ -56,7 +56,7 @@ class CategoriesFragment : Fragment()
 
     private fun configureViewModel()
     {
-        viewModel.errorMsgReference.observe(viewLifecycleOwner, EventObserver { binding.root.snackBar(getString(it)) })
+        viewModel.message.observe(viewLifecycleOwner, EventObserver { binding.root.snackBar(getString(it)) })
         viewModel.categoryClickEvent.observe(viewLifecycleOwner, EventObserver { navigateToProjectsFragment(it) })
         viewModel.categoryLongClickEvent.observe(viewLifecycleOwner, EventObserver { editOrDeleteCategory(it) })
         viewModel.loadCategories(args.themeId)

@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Portfolio</string>
 
+    <!-- Menu -->
+    <string name="menu_item_new_paragraph">New paragraph</string>
+
     <!-- Home -->
     <string name="home_view_model_user_fetch_success">Successfully fetched user info</string>
     <string name="home_view_model_user_fetch_error">An error occurred when fetching user info</string>
@@ -31,4 +34,20 @@
     <string name="categories_fragment_projects_fetch_success">Successfully fetched projects</string>
     <string name="categories_fragment_projects_fetch_error">An error occurred when fetching all projects</string>
     <string name="categories_fragment_projects_img_content_desc">Project main picture</string>
+
+    <!-- Add Edit Project -->
+    <string name="add_edit_project_view_model_project_fetch_error">An error occurred when fetching this project</string>
+    <string name="add_edit_project_view_model_project_insert_error">An error occurred when saving this project</string>
+    <string name="add_edit_project_view_model_project_insert_no_project_to_save">No project to save</string>
+    <string name="add_edit_project_fragment_title">Identification</string>
+    <string name="add_edit_project_fragment_title_hint">Project title</string>
+    <string name="add_edit_project_fragment_img_content_desc">Project main picture</string>
+    <string name="add_edit_project_fragment_img_alt_hint">image alt</string>
+    <string name="add_edit_project_fragment_created_hint">Creation date</string>
+    <string name="add_edit_project_fragment_btn_set_img">Set</string>
+    <string name="add_edit_project_fragment_required_field_msg">Required field</string>
+    <string name="add_edit_project_fragment_required_field_msg_snack_bar">Please fill all required field</string>
+    <string name="add_edit_project_fragment_post_content_title">Post content</string>
+    <string name="rv_item_add_edit_fragment_paragraph_content_title_hint">Post title</string>
+    <string name="rv_item_add_edit_fragment_paragraph_content_hint">Post content</string>
 </resources>

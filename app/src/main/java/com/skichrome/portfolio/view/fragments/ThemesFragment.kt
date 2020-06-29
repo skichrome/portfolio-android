@@ -54,7 +54,7 @@ class ThemesFragment : Fragment()
 
     private fun configureViewModel()
     {
-        viewModel.errorMsgReference.observe(viewLifecycleOwner, EventObserver { binding.root.snackBar(getString(it)) })
+        viewModel.message.observe(viewLifecycleOwner, EventObserver { binding.root.snackBar(getString(it)) })
         viewModel.themeClickEvent.observe(viewLifecycleOwner, EventObserver { navigateToCategoriesFragment(it) })
         viewModel.themeLongClickEvent.observe(viewLifecycleOwner, EventObserver { editOrDeleteTheme(it) })
     }

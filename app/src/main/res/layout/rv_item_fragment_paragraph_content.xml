@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="index"
+            type="Integer" />
+
+        <variable
+            name="paragraphContent"
+            type="com.skichrome.portfolio.model.remote.util.ParagraphContent" />
+
+        <variable
+            name="viewModel"
+            type="com.skichrome.portfolio.viewmodel.AddEditProjectViewModel" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/rv_item_fragment_projects_card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:onClick="@{() -> viewModel.onClickParagraphItem(index)}"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/rv_items_layout_padding">
+
+            <ImageView
+                android:id="@+id/rv_item_fragment_paragraph_content_img"
+                android:layout_width="@dimen/rv_items_img_size"
+                android:layout_height="@dimen/rv_items_img_size"
+                android:contentDescription="@string/categories_fragment_projects_img_content_desc"
+                android:src="@mipmap/ic_launcher"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/rv_item_fragment_paragraph_content_title_layout" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/rv_item_fragment_paragraph_content_title_layout"
+                style="@style/PortfolioTheme.editTextInputLayoutStyle"
+                android:layout_width="0dp"
+                android:layout_marginStart="@dimen/tv_input_margin"
+                android:layout_marginEnd="@dimen/tv_input_margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/rv_item_fragment_paragraph_content_img"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/rv_item_fragment_paragraph_content_title_edit_text"
+                    style="@style/PortfolioTheme.editTextInputStyle"
+                    android:hint="@string/rv_item_add_edit_fragment_paragraph_content_title_hint"
+                    android:text="@{paragraphContent.postTitle}"
+                    tools:text="paragraph title" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/rv_item_fragment_paragraph_content_content_layout"
+                style="@style/PortfolioTheme.editTextInputLayoutStyle"
+                android:layout_width="0dp"
+                android:layout_marginStart="@dimen/tv_input_margin"
+                android:layout_marginEnd="@dimen/tv_input_margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/rv_item_fragment_paragraph_content_img"
+                app:layout_constraintTop_toBottomOf="@+id/rv_item_fragment_paragraph_content_title_layout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/rv_item_fragment_paragraph_content_content_edit_text"
+                    style="@style/PortfolioTheme.editTextInputStyle"
+                    android:hint="@string/rv_item_add_edit_fragment_paragraph_content_hint"
+                    android:inputType="textMultiLine"
+                    android:text="@{paragraphContent.postContentText}"
+                    tools:text="@tools:sample/lorem/random" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

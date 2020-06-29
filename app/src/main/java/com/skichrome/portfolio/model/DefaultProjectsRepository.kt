@@ -13,4 +13,10 @@ class DefaultProjectsRepository(private val remoteSrc: ProjectsSource) : Project
 
     override suspend fun getAllProjectsFromCategoryFromTheme(themeId: String, categoryId: String): RequestResults<List<Project>> =
         remoteSrc.getAllProjectsFromCategoryFromTheme(themeId, categoryId)
+
+    override suspend fun getProject(themeId: String, categoryId: String, projectId: String): RequestResults<Project> =
+        remoteSrc.getProject(themeId, categoryId, projectId)
+
+    override suspend fun saveProject(themeId: String, categoryId: String, projectToUpdateId: String?, project: Project): RequestResults<String> =
+        remoteSrc.saveProject(themeId, categoryId, projectToUpdateId, project)
 }

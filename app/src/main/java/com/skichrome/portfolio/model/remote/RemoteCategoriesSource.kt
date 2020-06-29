@@ -30,7 +30,6 @@ class RemoteCategoriesSource(private val dispatcher: CoroutineDispatcher = Dispa
         {
             val result = getCategoriesReference(themeId).get().await()
                 .map { it.toObject(Category::class.java).withId<Category>(it.id) }
-
             Success(result)
         }
         catch (e: Exception)

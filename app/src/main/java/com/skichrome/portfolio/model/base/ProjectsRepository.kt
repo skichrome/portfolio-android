@@ -6,4 +6,8 @@ import com.skichrome.portfolio.util.RequestResults
 interface ProjectsRepository
 {
     suspend fun getAllProjectsFromCategoryFromTheme(themeId: String, categoryId: String): RequestResults<List<Project>>
+
+    suspend fun getProject(themeId: String, categoryId: String, projectId: String): RequestResults<Project>
+
+    suspend fun saveProject(themeId: String, categoryId: String, projectToUpdateId: String?, project: Project): RequestResults<String>
 }

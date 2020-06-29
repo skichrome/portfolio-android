@@ -29,7 +29,8 @@ class RemoteHomeSource(private val dispatcher: CoroutineDispatcher = Dispatchers
     override suspend fun getUserInfo(): RequestResults<User> = withContext(dispatcher) {
         return@withContext try
         {
-            val result = userReference.get().await().first().toObject(User::class.java).withId<User>(userReference.id)
+            val result = userReference.get().await().first()
+                .toObject(User::class.java).withId<User>(userReference.id)
             Success(result)
         }
         catch (e: Exception)

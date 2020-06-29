@@ -27,13 +27,8 @@ class RemoteThemesSource(private val dispatcher: CoroutineDispatcher = Dispatche
     override suspend fun getAllThemes(): RequestResults<List<Theme>> = withContext(dispatcher) {
         return@withContext try
         {
-            val query = themeReference.get()
-                .await()
-
-            val result = query.documents.map { document ->
-                document.toObject(Theme::class.java)!!.withId<Theme>(document.id)
-            }
-
+            val result = themeReference.get().await()
+                .map { it.toObject(Theme::class.java).withId<Theme>(it.id) }
             return@withContext Success(result)
         }
         catch (e: Exception)
