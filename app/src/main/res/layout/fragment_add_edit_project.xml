@@ -113,7 +113,7 @@
             android:layout_marginTop="@dimen/tv_input_margin"
             android:clipToPadding="false"
             android:paddingBottom="@dimen/fab_not_hide_content"
-            app:items_projects_paragraphs="@{viewModel.project.content}"
+            app:items_projects_paragraphs="@{viewModel.paragraphs}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

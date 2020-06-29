@@ -6,7 +6,7 @@ import com.google.firebase.firestore.PropertyName
 data class Project(
     @JvmField @PropertyName("title") val title: String,
     @JvmField @PropertyName("created") val createdAt: Timestamp,
-    @JvmField @PropertyName("post_content") var content: List<ParagraphContent> = emptyList(),
+    @JvmField @PropertyName("post_content") var content: MutableList<ParagraphContent> = mutableListOf(),
     @JvmField @PropertyName("main_picture") val mainPicture: String? = null,
     @JvmField @PropertyName("main_picture_alt") val mainPictureAlt: String? = null
 ) : Model()
@@ -18,7 +18,7 @@ data class ParagraphContent(
     @JvmField @PropertyName("title") var postTitle: String,
     @JvmField @PropertyName("content") var postContentText: String,
     @JvmField @PropertyName("image") var postImage: String? = null
-)
+) : Model()
 {
     constructor() : this("", "")
 }

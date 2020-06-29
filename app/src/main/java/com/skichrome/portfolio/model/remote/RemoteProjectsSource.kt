@@ -3,6 +3,7 @@ package com.skichrome.portfolio.model.remote
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.skichrome.portfolio.model.base.ProjectsSource
+import com.skichrome.portfolio.model.remote.util.ParagraphContent
 import com.skichrome.portfolio.model.remote.util.Project
 import com.skichrome.portfolio.util.*
 import com.skichrome.portfolio.util.RequestResults.Error
@@ -45,7 +46,9 @@ class RemoteProjectsSource(private val dispatcher: CoroutineDispatcher = Dispatc
         {
             val result = getProjectsReference(themeId, categoryId).document(projectId).get().await()
                 .let {
-                    it.toObject(Project::class.java)?.withId<Project>(it.id)
+                    it.toObject(Project::class.java)
+                        ?.withId<Project>(it.id)
+                        ?.also { project -> project.content.mapIndexed { index, paragraphContent -> paragraphContent.withId<ParagraphContent>("$index") } }
                         ?: return@withContext Error(FirebaseFirestoreClassCastException("Could not cast data object to Project class"))
                 }
             Success(result)

@@ -9,11 +9,14 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.ui.onNavDestinationSelected
+import com.firebase.ui.auth.AuthUI
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.Timestamp
 import com.skichrome.portfolio.PortfolioApplication
 import com.skichrome.portfolio.R
 import com.skichrome.portfolio.databinding.FragmentAddEditProjectBinding
+import com.skichrome.portfolio.model.remote.util.ParagraphContent
 import com.skichrome.portfolio.model.remote.util.Project
 import com.skichrome.portfolio.util.AutoClearedValue
 import com.skichrome.portfolio.util.EventObserver
@@ -87,7 +90,7 @@ class AddEditProjectFragment : Fragment()
 
         args.projectId?.let {
             viewModel.loadProject(args.themeId, args.categoryId, it)
-        }
+        } ?: viewModel.initNewProject(Project(title = "", createdAt = projectCreationDate, content = mutableListOf(ParagraphContent().withId("0"))))
     }
 
     private fun configureBinding()
@@ -110,6 +113,26 @@ class AddEditProjectFragment : Fragment()
     {
         activity?.apply {
             toolbar?.menu?.findItem(R.id.activity_main_menu_new_paragraph)?.isVisible = menuItemVisibility
+            toolbar?.setOnMenuItemClickListener {
+                when (it.itemId)
+                {
+                    R.id.activity_main_menu_logout ->
+                    {
+                        AuthUI.getInstance().signOut(this)
+                        this.finish()
+                    }
+                    R.id.activity_main_menu_new_paragraph ->
+                    {
+                        if (menuItemVisibility)
+                            viewModel.addNewParagraph()
+                        else
+                            return@setOnMenuItemClickListener true
+
+                    }
+                    else -> return@setOnMenuItemClickListener it.onNavDestinationSelected(findNavController()) || super.onOptionsItemSelected(it)
+                }
+                return@setOnMenuItemClickListener true
+            }
         }
 
         requiredFields = listOf(
