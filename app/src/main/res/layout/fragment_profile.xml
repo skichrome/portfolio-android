@@ -31,11 +31,20 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/profile_fragment_img_update_btn"
+            android:id="@+id/profile_fragment_img_update_btn_camera"
             style="@style/PortfolioTheme.ButtonStyle.Default"
             android:layout_marginTop="@dimen/buttons_margin_top_high"
-            android:text="@string/profile_fragment_btn_update_img"
+            android:text="@string/profile_fragment_btn_update_img_camera"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/profile_fragment_img_update_btn_picker"
+            app:layout_constraintTop_toBottomOf="@id/profile_fragment_user_img" />
+
+        <Button
+            android:id="@+id/profile_fragment_img_update_btn_picker"
+            style="@style/PortfolioTheme.ButtonStyle.Default"
+            android:layout_marginTop="@dimen/buttons_margin_top_high"
+            android:text="@string/profile_fragment_btn_update_img_picker"
+            app:layout_constraintEnd_toStartOf="@+id/profile_fragment_img_update_btn_camera"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/profile_fragment_user_img" />
 
@@ -48,7 +57,7 @@
             android:text="@string/profile_fragment_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profile_fragment_img_update_btn" />
+            app:layout_constraintTop_toBottomOf="@+id/profile_fragment_img_update_btn_camera" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/profile_fragment_user_first_name"

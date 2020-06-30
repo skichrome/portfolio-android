@@ -12,7 +12,7 @@ interface ProjectsSource
 
     suspend fun saveProject(themeId: String, categoryId: String, projectToUpdateId: String?, project: Project): RequestResults<String>
 
-    suspend fun uploadProjectImage(themeId: String, categoryId: String, projectId: String, localRef: String): RequestResults<Uri>
+    suspend fun uploadProjectImage(themeId: String, categoryId: String, projectId: String, localRef: Uri): RequestResults<Uri>
 
-    suspend fun uploadContentImage(themeId: String, categoryId: String, projectId: String, contentId: Int, localRef: String): RequestResults<Uri>
+    suspend fun uploadContentImage(themeId: String, categoryId: String, projectId: String, contentId: Int, localRef: Uri): RequestResults<Uri>
 }

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Portfolio</string>
     <string name="file_provider_authority" translatable="false">com.skichrome.portfolio.fileprovider</string>
+    <string name="profile_fragment_no_app_take_picture_intent">Your app doesn\'t have a file manager installed</string>
 
     <!-- Navigation -->
     <string name="navigation_fragment_title_home">Home</string>
@@ -28,7 +29,8 @@
 
     <!-- Profile -->
     <string name="profile_fragment_title">User information</string>
-    <string name="profile_fragment_btn_update_img">Update picture</string>
+    <string name="profile_fragment_btn_update_img_picker">Select picture</string>
+    <string name="profile_fragment_btn_update_img_camera">Take picture</string>
     <string name="profile_fragment_hint_last_name">Last Name</string>
     <string name="profile_fragment_hint_first_name">First Name</string>
     <string name="profile_fragment_hint_email">Email</string>

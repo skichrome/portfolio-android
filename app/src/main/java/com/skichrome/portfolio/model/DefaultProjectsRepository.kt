@@ -21,7 +21,7 @@ class DefaultProjectsRepository(private val remoteSrc: ProjectsSource) : Project
     override suspend fun saveProject(themeId: String, categoryId: String, projectToUpdateId: String?, project: Project): RequestResults<String> =
         remoteSrc.saveProject(themeId, categoryId, projectToUpdateId, project)
 
-    override suspend fun uploadProjectImage(themeId: String, categoryId: String, projectId: String, localRef: String): RequestResults<Uri> =
+    override suspend fun uploadProjectImage(themeId: String, categoryId: String, projectId: String, localRef: Uri): RequestResults<Uri> =
         remoteSrc.uploadProjectImage(themeId, categoryId, projectId, localRef)
 
     override suspend fun uploadContentImage(
@@ -29,7 +29,7 @@ class DefaultProjectsRepository(private val remoteSrc: ProjectsSource) : Project
         categoryId: String,
         projectId: String,
         contentId: Int,
-        localRef: String
+        localRef: Uri
     ): RequestResults<Uri> =
         remoteSrc.uploadContentImage(themeId, categoryId, projectId, contentId, localRef)
 }

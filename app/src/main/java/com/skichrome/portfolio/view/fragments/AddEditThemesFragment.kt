@@ -2,13 +2,11 @@ package com.skichrome.portfolio.view.fragments
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -23,7 +21,6 @@ import com.skichrome.portfolio.util.*
 import com.skichrome.portfolio.viewmodel.AddEditThemesViewModel
 import com.skichrome.portfolio.viewmodel.AddEditThemesViewModelFactory
 import kotlinx.android.synthetic.main.toolbar.*
-import java.io.IOException
 
 class AddEditThemesFragment : Fragment()
 {
@@ -35,7 +32,7 @@ class AddEditThemesFragment : Fragment()
     private lateinit var requiredFields: List<TextInputEditText>
     private val viewModel by viewModels<AddEditThemesViewModel> { AddEditThemesViewModelFactory((requireActivity().application as PortfolioApplication).themesRepository) }
     private val args by navArgs<AddEditThemesFragmentArgs>()
-    private var localImagePath: String? = null
+    private var localImagePath: Uri? = null
     private var remoteImagePath: String? = null
 
     // =================================
@@ -69,12 +66,20 @@ class AddEditThemesFragment : Fragment()
                 if (resultCode == Activity.RESULT_OK)
                     localImagePath?.let { binding.addEditThemeFragmentImage.loadPhotoWithGlide(it) }
             }
+            RC_IMAGE_PICKER_THEMES ->
+            {
+                if (resultCode == Activity.RESULT_OK)
+                {
+                    localImagePath = data?.data
+                    localImagePath?.let { binding.addEditThemeFragmentImage.loadPhotoWithGlide(it) }
+                }
+            }
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle)
     {
-        outState.putString(CURRENT_THEME_PICTURE_PATH_REF, localImagePath)
+        outState.putString(CURRENT_THEME_PICTURE_PATH_REF, localImagePath.toString())
         outState.putString(CURRENT_REMOTE_THEME_PICTURE_PATH_REF, remoteImagePath)
         super.onSaveInstanceState(outState)
     }
@@ -82,7 +87,7 @@ class AddEditThemesFragment : Fragment()
     override fun onViewStateRestored(savedInstanceState: Bundle?)
     {
         super.onViewStateRestored(savedInstanceState)
-        savedInstanceState?.getString(CURRENT_THEME_PICTURE_PATH_REF)?.let { localImagePath = it }
+        savedInstanceState?.getString(CURRENT_THEME_PICTURE_PATH_REF)?.let { localImagePath = Uri.parse(it) }
         savedInstanceState?.getString(CURRENT_REMOTE_THEME_PICTURE_PATH_REF)?.let { remoteImagePath = it }
 
         remoteImagePath?.let {
@@ -115,7 +120,10 @@ class AddEditThemesFragment : Fragment()
     private fun configureBinding()
     {
         binding.viewModel = viewModel
-        binding.addEditThemeFragmentImage.setOnClickListener { launchCamera() }
+        binding.addEditThemeFragmentUpdateBtnPicker.setOnClickListener { openImagePicker(binding.root, RC_IMAGE_PICKER_THEMES) }
+        binding.addEditThemeFragmentUpdateBtnCamera.setOnClickListener {
+            localImagePath = launchCamera(RC_IMAGE_CAPTURE_THEME_INTENT, PICTURES_THEME_FOLDER_NAME)
+        }
     }
 
     private fun configureUI()
@@ -170,38 +178,5 @@ class AddEditThemesFragment : Fragment()
         }
         else
             binding.root.snackBar(getString(R.string.add_edit_theme_fragment_required_field_msg_snack_bar))
-    }
-
-    private fun launchCamera()
-    {
-        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-            takePictureIntent.resolveActivity(requireActivity().packageManager)?.also {
-                val photoFile = try
-                {
-                    if (canWriteExternalStorage())
-                    {
-                        requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-                            ?.createOrGetJpegFile(PICTURES_THEME_FOLDER_NAME, "category")
-                    }
-                    else null
-                }
-                catch (e: IOException)
-                {
-                    errorLog("Error when getting photo file : ${e.message}", e)
-                    null
-                }
-
-                photoFile?.also { file ->
-                    localImagePath = file.absolutePath
-                    val uri = FileProvider.getUriForFile(
-                        requireActivity().applicationContext,
-                        requireActivity().getString(R.string.file_provider_authority),
-                        file
-                    )
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
-                    startActivityForResult(takePictureIntent, RC_IMAGE_CAPTURE_THEME_INTENT)
-                }
-            }
-        }
     }
 }

@@ -1,14 +1,12 @@
 package com.skichrome.portfolio.view.fragments
 
-import android.app.Activity
+import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -22,7 +20,6 @@ import com.skichrome.portfolio.model.remote.util.User
 import com.skichrome.portfolio.util.*
 import com.skichrome.portfolio.viewmodel.ProfileViewModel
 import com.skichrome.portfolio.viewmodel.ProfileViewModelFactory
-import java.io.IOException
 
 class ProfileFragment : Fragment()
 {
@@ -34,7 +31,7 @@ class ProfileFragment : Fragment()
     private lateinit var requiredFields: List<TextInputEditText>
     private val viewModel by viewModels<ProfileViewModel> { ProfileViewModelFactory((requireActivity().application as PortfolioApplication).homeRepository) }
     private val args by navArgs<ProfileFragmentArgs>()
-    private var localImageRef: String? = null
+    private var localImageRef: Uri? = null
     private var remoteImageRef: String? = null
 
     // =================================
@@ -65,15 +62,23 @@ class ProfileFragment : Fragment()
         {
             RC_IMAGE_CAPTURE_USER_INTENT ->
             {
-                if (resultCode == Activity.RESULT_OK)
+                if (resultCode == RESULT_OK)
                     localImageRef?.let { binding.profileFragmentUserImg.loadPhotoWithGlide(it) }
+            }
+            RC_IMAGE_PICKER_USERS ->
+            {
+                if (resultCode == RESULT_OK)
+                {
+                    localImageRef = data?.data
+                    localImageRef?.let { binding.profileFragmentUserImg.loadPhotoWithGlide(it) }
+                }
             }
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle)
     {
-        outState.putString(CURRENT_USER_PICTURE_PATH_REF, localImageRef)
+        outState.putString(CURRENT_USER_PICTURE_PATH_REF, localImageRef.toString())
         outState.putString(CURRENT_REMOTE_USER_PICTURE_PATH_REF, remoteImageRef)
         super.onSaveInstanceState(outState)
     }
@@ -81,7 +86,7 @@ class ProfileFragment : Fragment()
     override fun onViewStateRestored(savedInstanceState: Bundle?)
     {
         super.onViewStateRestored(savedInstanceState)
-        savedInstanceState?.getString(CURRENT_USER_PICTURE_PATH_REF)?.let { localImageRef = it }
+        savedInstanceState?.getString(CURRENT_USER_PICTURE_PATH_REF)?.let { localImageRef = Uri.parse(it) }
         savedInstanceState?.getString(CURRENT_REMOTE_USER_PICTURE_PATH_REF)?.let { remoteImageRef = it }
 
         remoteImageRef?.let {
@@ -114,7 +119,10 @@ class ProfileFragment : Fragment()
     private fun configureBinding()
     {
         binding.viewModel = viewModel
-        binding.profileFragmentImgUpdateBtn.setOnClickListener { launchCamera() }
+        binding.profileFragmentImgUpdateBtnCamera.setOnClickListener {
+            localImageRef = launchCamera(RC_IMAGE_CAPTURE_USER_INTENT, PICTURES_USERS_FOLDER_NAME)
+        }
+        binding.profileFragmentImgUpdateBtnPicker.setOnClickListener { openImagePicker(binding.root, RC_IMAGE_PICKER_USERS) }
     }
 
     private fun configureUI()
@@ -167,38 +175,5 @@ class ProfileFragment : Fragment()
         }
         else
             binding.root.snackBar(getString(R.string.edit_profile_fragment_required_field_msg_snack_bar))
-    }
-
-    private fun launchCamera()
-    {
-        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-            takePictureIntent.resolveActivity(requireActivity().packageManager)?.also {
-                val photoFile = try
-                {
-                    if (canWriteExternalStorage())
-                    {
-                        requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-                            ?.createOrGetJpegFile(PICTURES_USERS_FOLDER_NAME, "category")
-                    }
-                    else null
-                }
-                catch (e: IOException)
-                {
-                    errorLog("Error when getting photo file : ${e.message}", e)
-                    null
-                }
-
-                photoFile?.also { file ->
-                    localImageRef = file.absolutePath
-                    val uri = FileProvider.getUriForFile(
-                        requireActivity().applicationContext,
-                        requireActivity().getString(R.string.file_provider_authority),
-                        file
-                    )
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
-                    startActivityForResult(takePictureIntent, RC_IMAGE_CAPTURE_USER_INTENT)
-                }
-            }
-        }
     }
 }

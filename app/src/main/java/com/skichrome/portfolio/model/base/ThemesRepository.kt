@@ -12,5 +12,5 @@ interface ThemesRepository
 
     suspend fun uploadTheme(theme: Theme, themeToUpdateId: String?): RequestResults<String>
 
-    suspend fun uploadThemeImage(themeId: String, localImgRef: String): RequestResults<Uri>
+    suspend fun uploadThemeImage(themeId: String, localImgRef: Uri): RequestResults<Uri>
 }

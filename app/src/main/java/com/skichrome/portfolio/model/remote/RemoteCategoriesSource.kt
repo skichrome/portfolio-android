@@ -1,7 +1,6 @@
 package com.skichrome.portfolio.model.remote
 
 import android.net.Uri
-import androidx.core.net.toUri
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
@@ -15,7 +14,6 @@ import com.skichrome.portfolio.util.RequestResults.Success
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.io.File
 
 
 class RemoteCategoriesSource(private val dispatcher: CoroutineDispatcher = Dispatchers.IO) : CategoriesSource
@@ -90,7 +88,7 @@ class RemoteCategoriesSource(private val dispatcher: CoroutineDispatcher = Dispa
             }
         }
 
-    override suspend fun uploadCategoryImage(themeId: String, categoryId: String, localImgRef: String): RequestResults<Uri> =
+    override suspend fun uploadCategoryImage(themeId: String, categoryId: String, localImgRef: Uri): RequestResults<Uri> =
         withContext(dispatcher) {
             val metadata = storageMetadata {
                 contentType = "image/jpg"
@@ -98,10 +96,9 @@ class RemoteCategoriesSource(private val dispatcher: CoroutineDispatcher = Dispa
 
             return@withContext try
             {
-                val localFile = File(localImgRef).toUri()
-                val newRef = mediaReference.child("$categoryId/${localFile.path?.split("/")?.last().toString()}")
+                val newRef = mediaReference.child("$categoryId/${localImgRef.path?.split("/")?.last().toString()}")
 
-                val result = newRef.putFile(localFile, metadata)
+                val result = newRef.putFile(localImgRef, metadata)
                     .continueWithTask { task ->
                         if (!task.isSuccessful)
                             task.exception?.let { throw it }

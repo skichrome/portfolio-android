@@ -29,3 +29,11 @@ const val CURRENT_CATEGORY_PICTURE_PATH_REF = "category_picture_state_ref"
 const val CURRENT_REMOTE_CATEGORY_PICTURE_PATH_REF = "category_remote_picture_state_ref"
 const val CURRENT_PROJECT_PICTURE_PATH_REF = "project_picture_state_ref"
 const val CURRENT_REMOTE_PROJECT_PICTURE_PATH_REF = "project_remote_picture_state_ref"
+
+// Image Picker
+
+const val RC_IMAGE_PICKER_USERS = 785
+const val RC_IMAGE_PICKER_THEMES = 786
+const val RC_IMAGE_PICKER_CATEGORIES = 787
+const val RC_IMAGE_PICKER_PROJECTS = 788
+const val RC_IMAGE_PICKER_PROJECTS_PARAGRAPHS = 789

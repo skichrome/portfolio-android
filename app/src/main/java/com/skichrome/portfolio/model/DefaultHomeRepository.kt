@@ -19,5 +19,5 @@ class DefaultHomeRepository(private val source: HomeSource) : HomeRepository
     override suspend fun uploadProfile(user: User, userProfileToUpdate: String?): RequestResults<String> =
         source.uploadProfile(user, userProfileToUpdate)
 
-    override suspend fun uploadProfileImage(userId: String, localImgRef: String): RequestResults<Uri> = source.uploadProfileImage(userId, localImgRef)
+    override suspend fun uploadProfileImage(userId: String, localImgRef: Uri): RequestResults<Uri> = source.uploadProfileImage(userId, localImgRef)
 }

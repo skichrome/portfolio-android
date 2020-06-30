@@ -2,7 +2,6 @@ package com.skichrome.portfolio.model.remote
 
 import android.net.Uri
 import android.util.Log
-import androidx.core.net.toUri
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.ktx.Firebase
@@ -18,7 +17,6 @@ import com.skichrome.portfolio.util.RequestResults.Success
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.io.File
 
 class RemoteProjectsSource(private val dispatcher: CoroutineDispatcher = Dispatchers.IO) : ProjectsSource
 {
@@ -96,13 +94,12 @@ class RemoteProjectsSource(private val dispatcher: CoroutineDispatcher = Dispatc
             }
         }
 
-    override suspend fun uploadProjectImage(themeId: String, categoryId: String, projectId: String, localRef: String): RequestResults<Uri> =
+    override suspend fun uploadProjectImage(themeId: String, categoryId: String, projectId: String, localRef: Uri): RequestResults<Uri> =
         withContext(dispatcher) {
             return@withContext try
             {
-                val localFile = File(localRef).toUri()
-                val newRef = mediaReference.child("$projectId/${localFile.path?.split("/")?.last().toString()}")
-                val result = uploadImageToStorage(newRef, localFile)
+                val newRef = mediaReference.child("$projectId/${localRef.path?.split("/")?.last().toString()}")
+                val result = uploadImageToStorage(newRef, localRef)
                 if (result is Success)
                 {
                     getProjectsReference(themeId, categoryId)
@@ -137,12 +134,11 @@ class RemoteProjectsSource(private val dispatcher: CoroutineDispatcher = Dispatc
         categoryId: String,
         projectId: String,
         contentId: Int,
-        localRef: String
+        localRef: Uri
     ): RequestResults<Uri> = withContext(dispatcher) {
         return@withContext try
         {
-            val localFile = File(localRef).toUri()
-            val newRef = mediaReference.child("$projectId/content/${localFile.path?.split("/")?.last().toString()}")
+            val newRef = mediaReference.child("$projectId/content/${localRef.path?.split("/")?.last().toString()}")
 
             getProjectsReference(themeId, categoryId)
                 .document(projectId)
@@ -158,7 +154,7 @@ class RemoteProjectsSource(private val dispatcher: CoroutineDispatcher = Dispatc
                         .await()
                 }
 
-            val result = uploadImageToStorage(newRef, localFile)
+            val result = uploadImageToStorage(newRef, localRef)
             if (result is Success)
                 updateFirestoreArrayWithImgRemoteUri(themeId, categoryId, projectId, contentId, result.data)
             return@withContext result

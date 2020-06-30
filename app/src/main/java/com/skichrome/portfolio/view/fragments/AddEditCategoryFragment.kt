@@ -2,13 +2,11 @@ package com.skichrome.portfolio.view.fragments
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -23,7 +21,6 @@ import com.skichrome.portfolio.util.*
 import com.skichrome.portfolio.viewmodel.AddEditCategoryViewModel
 import com.skichrome.portfolio.viewmodel.AddEditCategoryViewModelFactory
 import kotlinx.android.synthetic.main.toolbar.*
-import java.io.IOException
 
 class AddEditCategoryFragment : Fragment()
 {
@@ -35,7 +32,7 @@ class AddEditCategoryFragment : Fragment()
     private lateinit var requiredField: List<TextInputEditText>
     private val viewModel by viewModels<AddEditCategoryViewModel> { AddEditCategoryViewModelFactory((requireActivity().application as PortfolioApplication).categoriesRepository) }
     private val args by navArgs<AddEditCategoryFragmentArgs>()
-    private var localImgPath: String? = null
+    private var localImgPath: Uri? = null
     private var remoteImgPath: String? = null
 
     // =================================
@@ -69,12 +66,20 @@ class AddEditCategoryFragment : Fragment()
                 if (resultCode == Activity.RESULT_OK)
                     localImgPath?.let { binding.addEditCategoryFragmentImage.loadPhotoWithGlide(it) }
             }
+            RC_IMAGE_PICKER_CATEGORIES ->
+            {
+                if (resultCode == Activity.RESULT_OK)
+                {
+                    localImgPath = data?.data
+                    localImgPath?.let { binding.addEditCategoryFragmentImage.loadPhotoWithGlide(it) }
+                }
+            }
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle)
     {
-        outState.putString(CURRENT_CATEGORY_PICTURE_PATH_REF, localImgPath)
+        outState.putString(CURRENT_CATEGORY_PICTURE_PATH_REF, localImgPath.toString())
         outState.putString(CURRENT_REMOTE_CATEGORY_PICTURE_PATH_REF, remoteImgPath)
         super.onSaveInstanceState(outState)
     }
@@ -82,7 +87,7 @@ class AddEditCategoryFragment : Fragment()
     override fun onViewStateRestored(savedInstanceState: Bundle?)
     {
         super.onViewStateRestored(savedInstanceState)
-        savedInstanceState?.getString(CURRENT_CATEGORY_PICTURE_PATH_REF)?.let { localImgPath = it }
+        savedInstanceState?.getString(CURRENT_CATEGORY_PICTURE_PATH_REF)?.let { localImgPath = Uri.parse(it) }
         savedInstanceState?.getString(CURRENT_REMOTE_CATEGORY_PICTURE_PATH_REF)?.let { remoteImgPath = it }
 
         remoteImgPath?.let {
@@ -117,7 +122,10 @@ class AddEditCategoryFragment : Fragment()
     private fun configureBinding()
     {
         binding.viewModel = viewModel
-        binding.addEditCategoryFragmentImage.setOnClickListener { launchCamera() }
+        binding.addEditCategoryFragmentUpdateBtnPicker.setOnClickListener { openImagePicker(binding.root, RC_IMAGE_PICKER_CATEGORIES) }
+        binding.addEditCategoryFragmentUpdateBtnCamera.setOnClickListener {
+            localImgPath = launchCamera(RC_IMAGE_CAPTURE_CATEGORY_INTENT, PICTURES_CATEGORY_FOLDER_NAME)
+        }
     }
 
     private fun configureUI()
@@ -169,39 +177,6 @@ class AddEditCategoryFragment : Fragment()
                 localFileReference = localImgPath
             )
             viewModel.saveCategory(args.themeId, category, args.categoryId)
-        }
-    }
-
-    private fun launchCamera()
-    {
-        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-            takePictureIntent.resolveActivity(requireActivity().packageManager)?.also {
-                val photoFile = try
-                {
-                    if (canWriteExternalStorage())
-                    {
-                        requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-                            ?.createOrGetJpegFile(PICTURES_CATEGORY_FOLDER_NAME, "category")
-                    }
-                    else null
-                }
-                catch (e: IOException)
-                {
-                    errorLog("Error when getting photo file : ${e.message}", e)
-                    null
-                }
-
-                photoFile?.also { file ->
-                    localImgPath = file.absolutePath
-                    val uri = FileProvider.getUriForFile(
-                        requireActivity().applicationContext,
-                        requireActivity().getString(R.string.file_provider_authority),
-                        file
-                    )
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
-                    startActivityForResult(takePictureIntent, RC_IMAGE_CAPTURE_CATEGORY_INTENT)
-                }
-            }
         }
     }
 }

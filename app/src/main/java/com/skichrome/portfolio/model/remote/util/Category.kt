@@ -1,5 +1,6 @@
 package com.skichrome.portfolio.model.remote.util
 
+import android.net.Uri
 import com.google.firebase.firestore.Exclude
 import com.google.firebase.firestore.IgnoreExtraProperties
 import com.google.firebase.firestore.PropertyName
@@ -10,7 +11,7 @@ data class Category(
     @JvmField @PropertyName("desc") val description: String,
     @JvmField @PropertyName("image") val imgReference: String? = null,
     @JvmField @PropertyName("image_alt") val imageAlt: String,
-    @JvmField @Exclude val localFileReference: String? = null
+    @JvmField @Exclude val localFileReference: Uri? = null
 ) : Model()
 {
     constructor() : this(name = "", description = "", imageAlt = "")

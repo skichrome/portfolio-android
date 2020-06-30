@@ -18,6 +18,6 @@ class DefaultThemesRepository(private val remoteSrc: ThemesSource) : ThemesRepos
 
     override suspend fun uploadTheme(theme: Theme, themeToUpdateId: String?): RequestResults<String> = remoteSrc.uploadTheme(theme, themeToUpdateId)
 
-    override suspend fun uploadThemeImage(themeId: String, localImgRef: String): RequestResults<Uri> =
+    override suspend fun uploadThemeImage(themeId: String, localImgRef: Uri): RequestResults<Uri> =
         remoteSrc.uploadThemeImage(themeId, localImgRef)
 }

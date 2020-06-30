@@ -12,5 +12,5 @@ interface HomeRepository
 
     suspend fun uploadProfile(user: User, userProfileToUpdate: String?): RequestResults<String>
 
-    suspend fun uploadProfileImage(userId: String, localImgRef: String): RequestResults<Uri>
+    suspend fun uploadProfileImage(userId: String, localImgRef: Uri): RequestResults<Uri>
 }

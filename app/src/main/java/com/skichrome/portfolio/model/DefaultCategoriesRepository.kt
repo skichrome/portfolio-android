@@ -19,6 +19,6 @@ class DefaultCategoriesRepository(private val remoteSrc: CategoriesSource) : Cat
     override suspend fun uploadCategory(themeId: String, category: Category, categoryToUpdateId: String?): RequestResults<String> =
         remoteSrc.uploadCategory(themeId, category, categoryToUpdateId)
 
-    override suspend fun uploadCategoryImage(themeId: String, categoryId: String, localImgRef: String): RequestResults<Uri> =
+    override suspend fun uploadCategoryImage(themeId: String, categoryId: String, localImgRef: Uri): RequestResults<Uri> =
         remoteSrc.uploadCategoryImage(themeId, categoryId, localImgRef)
 }

@@ -2,13 +2,11 @@ package com.skichrome.portfolio.view.fragments
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -28,7 +26,6 @@ import com.skichrome.portfolio.view.ui.ProjectParagraphContentAdapter
 import com.skichrome.portfolio.viewmodel.AddEditProjectViewModel
 import com.skichrome.portfolio.viewmodel.AddEditProjectViewModelFactory
 import kotlinx.android.synthetic.main.toolbar.*
-import java.io.IOException
 
 class AddEditProjectFragment : Fragment()
 {
@@ -42,10 +39,10 @@ class AddEditProjectFragment : Fragment()
     private val args by navArgs<AddEditProjectFragmentArgs>()
     private var adapter by AutoClearedValue<ProjectParagraphContentAdapter>()
     private var projectCreationDate = Timestamp(System.currentTimeMillis() / 1000, 0)
-    private var projectPhotoPath: String? = null
+    private var projectPhotoPath: Uri? = null
     private var remotePhotoPath: String? = null
     private var lastParagraphIndex: Int? = null
-    private var lastParagraphPhotoPath: String? = null
+    private var lastParagraphPhotoPath: Uri? = null
 
     // =================================
     //        Superclass Methods
@@ -100,8 +97,8 @@ class AddEditProjectFragment : Fragment()
 
     override fun onSaveInstanceState(outState: Bundle)
     {
-        outState.putString(CURRENT_PROJECT_PICTURE_PATH_REF, projectPhotoPath)
-        outState.putString(CURRENT_REMOTE_PROJECT_PICTURE_PATH_REF, projectPhotoPath)
+        outState.putString(CURRENT_PROJECT_PICTURE_PATH_REF, projectPhotoPath.toString())
+        outState.putString(CURRENT_REMOTE_PROJECT_PICTURE_PATH_REF, remotePhotoPath)
         super.onSaveInstanceState(outState)
     }
 
@@ -109,7 +106,7 @@ class AddEditProjectFragment : Fragment()
     {
         super.onViewStateRestored(savedInstanceState)
         savedInstanceState?.getString(CURRENT_REMOTE_PROJECT_PICTURE_PATH_REF)?.let { remotePhotoPath = it }
-        savedInstanceState?.getString(CURRENT_PROJECT_PICTURE_PATH_REF)?.let { projectPhotoPath = it }
+        savedInstanceState?.getString(CURRENT_PROJECT_PICTURE_PATH_REF)?.let { projectPhotoPath = Uri.parse(it) }
 
         remotePhotoPath?.let {
             binding.addEditProjectFragmentImg.loadPhotoWithGlide(it)
@@ -127,7 +124,7 @@ class AddEditProjectFragment : Fragment()
         viewModel.message.observe(viewLifecycleOwner, EventObserver { binding.root.snackBar(getString(it)) })
         viewModel.paragraphLongClickEvent.observe(viewLifecycleOwner, EventObserver { toast("Paragraph long click") })
         viewModel.paragraphPictureClickEvent.observe(viewLifecycleOwner, EventObserver {
-            launchCamera(RC_IMAGE_CAPTURE_PARAGRAPHS_INTENT, false)
+            lastParagraphPhotoPath = launchCamera(RC_IMAGE_CAPTURE_PARAGRAPHS_INTENT, PICTURES_PROJECT_FOLDER_NAME)
             lastParagraphIndex = it
         })
         viewModel.project.observe(viewLifecycleOwner, Observer {
@@ -159,7 +156,9 @@ class AddEditProjectFragment : Fragment()
     private fun configureBinding()
     {
         binding.viewModel = viewModel
-        binding.addEditProjectFragmentImg.setOnClickListener { launchCamera(RC_IMAGE_CAPTURE_PROJECTS_INTENT, true) }
+        binding.addEditProjectFragmentImg.setOnClickListener {
+            projectPhotoPath = launchCamera(RC_IMAGE_CAPTURE_PROJECTS_INTENT, PICTURES_PROJECT_FOLDER_NAME)
+        }
     }
 
     private fun configureRecyclerView()
@@ -236,47 +235,12 @@ class AddEditProjectFragment : Fragment()
                 description = binding.addEditProjectFragmentProjectDescriptionEditText.text.toString(),
                 createdAt = projectCreationDate,
                 mainPicture = remotePhotoPath,
-                mainPictureAlt = binding.addEditProjectFragmentImgAltEditText.text.toString()
+                mainPictureAlt = binding.addEditProjectFragmentImgAltEditText.text.toString(),
+                localMainPicture = projectPhotoPath
             )
-            viewModel.saveProject(args.themeId, args.categoryId, args.projectId, newProject, projectPhotoPath)
+            viewModel.saveProject(args.themeId, args.categoryId, args.projectId, newProject)
         }
         else
             binding.root.snackBar(getString(R.string.add_edit_project_fragment_required_field_msg_snack_bar))
-    }
-
-    private fun launchCamera(requestCode: Int, origin: Boolean)
-    {
-        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-            takePictureIntent.resolveActivity(requireActivity().packageManager)?.also {
-                val photoFile = try
-                {
-                    if (canWriteExternalStorage())
-                    {
-                        requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-                            ?.createOrGetJpegFile(PICTURES_PROJECT_FOLDER_NAME, "projects")
-                    }
-                    else null
-                }
-                catch (e: IOException)
-                {
-                    errorLog("Error when getting photo file : ${e.message}", e)
-                    null
-                }
-
-                photoFile?.also { file ->
-                    if (origin)
-                        projectPhotoPath = file.absolutePath
-                    else
-                        lastParagraphPhotoPath = file.absolutePath
-                    val uri = FileProvider.getUriForFile(
-                        requireActivity().applicationContext,
-                        requireActivity().getString(R.string.file_provider_authority),
-                        file
-                    )
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
-                    startActivityForResult(takePictureIntent, requestCode)
-                }
-            }
-        }
     }
 }

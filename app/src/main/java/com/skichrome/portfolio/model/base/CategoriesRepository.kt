@@ -12,5 +12,5 @@ interface CategoriesRepository
 
     suspend fun uploadCategory(themeId: String, category: Category, categoryToUpdateId: String?): RequestResults<String>
 
-    suspend fun uploadCategoryImage(themeId: String, categoryId: String, localImgRef: String): RequestResults<Uri>
+    suspend fun uploadCategoryImage(themeId: String, categoryId: String, localImgRef: Uri): RequestResults<Uri>
 }

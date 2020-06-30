@@ -89,6 +89,24 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/add_edit_category_fragment_image_title_text_view" />
 
+        <Button
+            android:id="@+id/add_edit_category_fragment_update_btn_camera"
+            style="@style/PortfolioTheme.ButtonStyle.Default"
+            android:layout_marginTop="@dimen/buttons_margin_top_high"
+            android:text="@string/profile_fragment_btn_update_img_camera"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/add_edit_category_fragment_update_btn_picker"
+            app:layout_constraintTop_toBottomOf="@id/add_edit_category_fragment_image" />
+
+        <Button
+            android:id="@+id/add_edit_category_fragment_update_btn_picker"
+            style="@style/PortfolioTheme.ButtonStyle.Default"
+            android:layout_marginTop="@dimen/buttons_margin_top_high"
+            android:text="@string/profile_fragment_btn_update_img_picker"
+            app:layout_constraintEnd_toStartOf="@+id/add_edit_category_fragment_update_btn_camera"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/add_edit_category_fragment_image" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/add_edit_category_fragment_img_alt_layout"
             style="@style/PortfolioTheme.editTextInputLayoutStyle"
@@ -97,7 +115,7 @@
             android:layout_marginEnd="@dimen/tv_input_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/add_edit_category_fragment_image">
+            app:layout_constraintTop_toBottomOf="@+id/add_edit_category_fragment_update_btn_camera">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/add_edit_category_fragment_img_alt_edit_text"

@@ -2,7 +2,6 @@ package com.skichrome.portfolio.model.remote
 
 import android.net.Uri
 import android.util.Log
-import androidx.core.net.toUri
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -15,7 +14,6 @@ import com.skichrome.portfolio.util.RequestResults.Success
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.io.File
 
 class RemoteHomeSource(private val dispatcher: CoroutineDispatcher = Dispatchers.IO) : HomeSource
 {
@@ -87,17 +85,16 @@ class RemoteHomeSource(private val dispatcher: CoroutineDispatcher = Dispatchers
         }
     }
 
-    override suspend fun uploadProfileImage(userId: String, localImgRef: String): RequestResults<Uri> = withContext(dispatcher) {
+    override suspend fun uploadProfileImage(userId: String, localImgRef: Uri): RequestResults<Uri> = withContext(dispatcher) {
         val metadata = storageMetadata {
             contentType = "image/jpg"
         }
 
         return@withContext try
         {
-            val localFile = File(localImgRef).toUri()
-            val newRef = userStorageReference.child("$userId/${localFile.path?.split("/")?.last().toString()}")
+            val newRef = userStorageReference.child("$userId/${localImgRef.path?.split("/")?.last().toString()}")
 
-            val result = newRef.putFile(localFile, metadata)
+            val result = newRef.putFile(localImgRef, metadata)
                 .continueWithTask { task ->
                     if (!task.isSuccessful)
                         task.exception?.let { throw it }
