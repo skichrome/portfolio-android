@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.skichrome.portfolio.viewmodel.AddEditCategoryViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/add_edit_category_fragment_title_text_view"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/tv_input_margin"
+            android:layout_marginTop="@dimen/tv_input_margin"
+            android:text="@string/add_edit_category_fragment_main_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/add_edit_category_fragment_name_layout"
+            style="@style/PortfolioTheme.editTextInputLayoutStyle"
+            android:layout_width="0dp"
+            android:layout_marginStart="@dimen/tv_input_margin"
+            android:layout_marginEnd="@dimen/tv_input_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_edit_category_fragment_title_text_view">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/add_edit_category_fragment_name_edit_text"
+                style="@style/PortfolioTheme.editTextInputStyle"
+                android:hint="@string/add_edit_category_fragment_category_name_hint"
+                android:text="@{viewModel.category.name}"
+                tools:text="Category name" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/add_edit_category_fragment_content_layout"
+            style="@style/PortfolioTheme.editTextInputLayoutStyle"
+            android:layout_width="0dp"
+            android:layout_marginStart="@dimen/tv_input_margin"
+            android:layout_marginEnd="@dimen/tv_input_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_edit_category_fragment_name_layout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/add_edit_category_fragment_content_edit_text"
+                style="@style/PortfolioTheme.editTextInputStyle"
+                android:hint="@string/add_edit_category_fragment_category_content_hint"
+                android:inputType="textMultiLine"
+                android:text="@{viewModel.category.description}"
+                tools:text="category description" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/add_edit_category_fragment_image_title_text_view"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/tv_input_margin"
+            android:layout_marginTop="@dimen/tv_input_margin"
+            android:text="@string/add_edit_category_fragment_image_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_edit_category_fragment_content_layout" />
+
+        <ImageView
+            android:id="@+id/add_edit_category_fragment_image"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="@dimen/img_default_margin"
+            android:layout_marginTop="@dimen/img_default_margin"
+            android:layout_marginEnd="@dimen/img_default_margin"
+            android:contentDescription="@string/add_edit_category_fragment_category_img_content_desc"
+            android:src="@mipmap/ic_launcher"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_edit_category_fragment_image_title_text_view" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/add_edit_category_fragment_img_alt_layout"
+            style="@style/PortfolioTheme.editTextInputLayoutStyle"
+            android:layout_width="0dp"
+            android:layout_marginStart="@dimen/tv_input_margin"
+            android:layout_marginEnd="@dimen/tv_input_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_edit_category_fragment_image">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/add_edit_category_fragment_img_alt_edit_text"
+                style="@style/PortfolioTheme.editTextInputStyle"
+                android:hint="@string/add_edit_category_fragment_category_img_alt_hint"
+                android:inputType="textMultiLine"
+                android:text="@{viewModel.category.imageAlt}"
+                tools:text="category image alt" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ProgressBar
+            android:id="@+id/add_edit_project_fragment_progress_bar"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="@{viewModel.loading ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_edit_category_fragment_fab"
+            style="@style/PortfolioTheme.ButtonStyle.FloatingActionButton"
+            android:src="@drawable/ic_baseline_save_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

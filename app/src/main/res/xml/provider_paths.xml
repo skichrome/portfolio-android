@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <paths>
-    <!-- Contain the pictures for each machines -->
+    <!-- Contain the pictures for themes -->
     <external-files-path
-        name="medias"
+        name="themesMedias"
+        path="Pictures/themes_media/" />
+
+    <!-- Contain the pictures for categories -->
+    <external-files-path
+        name="categoriesMedias"
+        path="Pictures/categories_media/" />
+
+    <!-- Contain the pictures for projects and paragraphs -->
+    <external-files-path
+        name="projectsMedias"
         path="Pictures/projects_media/" />
 </paths>

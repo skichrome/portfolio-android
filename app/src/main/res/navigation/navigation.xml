@@ -46,6 +46,9 @@
         <action
             android:id="@+id/action_categoriesFragment_to_projectsFragment"
             app:destination="@id/projectsFragment" />
+        <action
+            android:id="@+id/action_categoriesFragment_to_addEditCategoryFragment"
+            app:destination="@id/addEditCategoryFragment" />
     </fragment>
 
     <fragment
@@ -77,6 +80,20 @@
             app:argType="string" />
         <argument
             android:name="projectId"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addEditCategoryFragment"
+        android:name="com.skichrome.portfolio.view.fragments.AddEditCategoryFragment"
+        android:label="AddEditCategoryFragment"
+        tools:layout="@layout/fragment_add_edit_category">
+        <argument
+            android:name="themeId"
+            app:argType="string" />
+        <argument
+            android:name="categoryId"
             app:argType="string"
             app:nullable="true" />
     </fragment>

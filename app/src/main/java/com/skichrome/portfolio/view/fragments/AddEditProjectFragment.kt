@@ -2,7 +2,6 @@ package com.skichrome.portfolio.view.fragments
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -101,16 +100,16 @@ class AddEditProjectFragment : Fragment()
 
     override fun onSaveInstanceState(outState: Bundle)
     {
-        outState.putString(CURRENT_PICTURE_PATH_REF, projectPhotoPath)
-        outState.putString(CURRENT_REMOTE_PICTURE_PATH_REF, projectPhotoPath)
+        outState.putString(CURRENT_PROJECT_PICTURE_PATH_REF, projectPhotoPath)
+        outState.putString(CURRENT_REMOTE_PROJECT_PICTURE_PATH_REF, projectPhotoPath)
         super.onSaveInstanceState(outState)
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?)
     {
         super.onViewStateRestored(savedInstanceState)
-        savedInstanceState?.getString(CURRENT_REMOTE_PICTURE_PATH_REF)?.let { remotePhotoPath = it }
-        savedInstanceState?.getString(CURRENT_PICTURE_PATH_REF)?.let { projectPhotoPath = it }
+        savedInstanceState?.getString(CURRENT_REMOTE_PROJECT_PICTURE_PATH_REF)?.let { remotePhotoPath = it }
+        savedInstanceState?.getString(CURRENT_PROJECT_PICTURE_PATH_REF)?.let { projectPhotoPath = it }
 
         remotePhotoPath?.let {
             binding.addEditProjectFragmentImg.loadPhotoWithGlide(it)
@@ -136,7 +135,7 @@ class AddEditProjectFragment : Fragment()
                 projectCreationDate = project.createdAt
                 project.mainPicture?.let { imgRef ->
                     remotePhotoPath = imgRef
-                    binding.addEditProjectFragmentImg.loadPhotoWithGlide(Uri.parse(imgRef))
+                    binding.addEditProjectFragmentImg.loadPhotoWithGlide(imgRef)
                 }
             }
         })
@@ -250,7 +249,7 @@ class AddEditProjectFragment : Fragment()
                     if (canWriteExternalStorage())
                     {
                         requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-                            ?.createOrGetJpegFile(PICTURES_FOLDER_NAME, "projects")
+                            ?.createOrGetJpegFile(PICTURES_PROJECT_FOLDER_NAME, "projects")
                     }
                     else null
                 }

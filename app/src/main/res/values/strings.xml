@@ -56,4 +56,18 @@
     <string name="add_edit_project_fragment_post_content_title">Post content</string>
     <string name="rv_item_add_edit_fragment_paragraph_content_title_hint">Post title</string>
     <string name="rv_item_add_edit_fragment_paragraph_content_hint">Post content</string>
+
+    <!-- Add Edit Category -->
+    <string name="add_edit_category_fragment_main_title">Content</string>
+    <string name="add_edit_category_fragment_image_title">Image</string>
+    <string name="add_edit_category_fragment_category_name_hint">Category title</string>
+    <string name="add_edit_category_fragment_category_content_hint">Category content</string>
+    <string name="add_edit_category_fragment_category_img_content_desc">Insert new category image</string>
+    <string name="add_edit_category_fragment_category_img_alt_hint">Category image</string>
+    <string name="add_edit_category_view_model_category_fetch_error">An error occurred when fetching this category</string>
+    <string name="add_edit_category_view_model_category_upload_img_error">An error occurred when uploading this category image</string>
+    <string name="add_edit_category_view_model_category_insert_error">An error occurred when saving this category</string>
+    <string name="add_edit_category_fragment_required_field_msg">Required field</string>
+    <string name="add_edit_category_fragment_required_field_msg_no_picture_set">Please add an image to this category</string>
+    <string name="add_edit_category_fragment_required_field_msg_snack_bar">Please fill all required field</string>
 </resources>
