@@ -24,7 +24,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:foreground="?android:attr/selectableItemBackground"
-        android:onClick="@{() -> viewModel.onClickParagraphItem(index)}"
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true">
 
@@ -37,8 +36,9 @@
                 android:id="@+id/rv_item_fragment_paragraph_content_img"
                 android:layout_width="@dimen/rv_items_img_size"
                 android:layout_height="@dimen/rv_items_img_size"
-                android:contentDescription="@string/categories_fragment_projects_img_content_desc"
                 android:background="?android:attr/selectableItemBackground"
+                android:contentDescription="@string/categories_fragment_projects_img_content_desc"
+                android:onClick="@{() -> viewModel.onClickParagraphPicture(index)}"
                 android:src="@mipmap/ic_launcher"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/rv_item_fragment_paragraph_content_title_layout" />

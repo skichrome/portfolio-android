@@ -23,4 +23,13 @@ class DefaultProjectsRepository(private val remoteSrc: ProjectsSource) : Project
 
     override suspend fun uploadProjectImage(themeId: String, categoryId: String, projectId: String, localRef: String): RequestResults<Uri> =
         remoteSrc.uploadProjectImage(themeId, categoryId, projectId, localRef)
+
+    override suspend fun uploadContentImage(
+        themeId: String,
+        categoryId: String,
+        projectId: String,
+        contentId: Int,
+        localRef: String
+    ): RequestResults<Uri> =
+        remoteSrc.uploadContentImage(themeId, categoryId, projectId, contentId, localRef)
 }

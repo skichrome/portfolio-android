@@ -7,8 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.skichrome.portfolio.R
 import com.skichrome.portfolio.databinding.RvItemFragmentParagraphContentBinding
 import com.skichrome.portfolio.model.remote.util.ParagraphContent
+import com.skichrome.portfolio.util.loadPhotoWithGlide
 import com.skichrome.portfolio.viewmodel.AddEditProjectViewModel
 
 class ProjectParagraphContentAdapter(private val viewModel: AddEditProjectViewModel) :
@@ -47,13 +50,17 @@ class ProjectParagraphContentAdapter(private val viewModel: AddEditProjectViewMo
             binding.index = index
             binding.paragraphContent = content
 
+            content.localPostImage?.let {
+                binding.rvItemFragmentParagraphContentImg.loadPhotoWithGlide(it)
+            } ?: content.postImage?.let {
+                binding.rvItemFragmentParagraphContentImg.loadPhotoWithGlide(it)
+            } ?: Glide.with(binding.root).load(R.drawable.ic_baseline_image_24).into(binding.rvItemFragmentParagraphContentImg)
+
             onLongClickListener.position = index
             titleTextListener.position = index
             contentTextListener.position = index
 
             binding.executePendingBindings()
-
-            //Todo màj photo du Projet avec glide
         }
     }
 

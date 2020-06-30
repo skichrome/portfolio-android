@@ -1,6 +1,8 @@
 package com.skichrome.portfolio.model.remote.util
 
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.Exclude
+import com.google.firebase.firestore.IgnoreExtraProperties
 import com.google.firebase.firestore.PropertyName
 
 data class Project(
@@ -15,10 +17,13 @@ data class Project(
     constructor() : this("", "", Timestamp(0, 0))
 }
 
+@IgnoreExtraProperties
 data class ParagraphContent(
     @JvmField @PropertyName("title") var postTitle: String,
     @JvmField @PropertyName("content") var postContentText: String,
-    @JvmField @PropertyName("image") var postImage: String? = null
+    @JvmField @PropertyName("image") var postImage: String? = null,
+    @JvmField @Exclude var localPostImage: String? = null,
+    @JvmField @Exclude var index: Int = -1
 ) : Model()
 {
     constructor() : this("", "")

@@ -69,7 +69,7 @@ fun ImageView.loadPhotoWithGlide(photoReference: String)
         .load(photoReference)
         .centerCrop()
         .apply(requestOptions)
-        .error(ContextCompat.getDrawable(context, R.mipmap.ic_launcher))
+        .error(ContextCompat.getDrawable(context, R.drawable.ic_baseline_image_24))
         .into(this)
 }
 
@@ -81,7 +81,7 @@ fun ImageView.loadPhotoWithGlide(photoReference: Bitmap)
         .load(photoReference)
         .centerCrop()
         .apply(requestOptions)
-        .error(ContextCompat.getDrawable(context, R.mipmap.ic_launcher))
+        .error(ContextCompat.getDrawable(context, R.drawable.ic_baseline_image_24))
         .into(this)
 }
 

@@ -7,6 +7,7 @@ import com.google.firebase.firestore.IgnoreExtraProperties
 @IgnoreExtraProperties
 abstract class Model
 {
+    @JvmField
     @Exclude
     var id: String = ""
 

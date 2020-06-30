@@ -6,6 +6,7 @@ import com.skichrome.portfolio.model.base.ProjectsRepository
 import com.skichrome.portfolio.model.remote.util.ParagraphContent
 import com.skichrome.portfolio.model.remote.util.Project
 import com.skichrome.portfolio.util.Event
+import com.skichrome.portfolio.util.RequestResults.Error
 import com.skichrome.portfolio.util.RequestResults.Success
 import kotlinx.coroutines.launch
 
@@ -21,8 +22,8 @@ class AddEditProjectViewModel(private val repository: ProjectsRepository) : Base
     private val _paragraphs = MutableLiveData<MutableList<ParagraphContent>>()
     val paragraphs: LiveData<List<ParagraphContent>> = _paragraphs.map { it.toList() }
 
-    private val _paragraphClickEvent = MutableLiveData<Event<Int>>()
-    val paragraphClickEvent: LiveData<Event<Int>> = _paragraphClickEvent
+    private val _paragraphPictureClickEvent = MutableLiveData<Event<Int>>()
+    val paragraphPictureClickEvent: LiveData<Event<Int>> = _paragraphPictureClickEvent
 
     private val _paragraphLongClickEvent = MutableLiveData<Event<Int>>()
     val paragraphLongClickEvent: LiveData<Event<Int>> = _paragraphLongClickEvent
@@ -34,9 +35,9 @@ class AddEditProjectViewModel(private val repository: ProjectsRepository) : Base
     //              Methods
     // =================================
 
-    fun onClickParagraphItem(index: Int)
+    fun onClickParagraphPicture(index: Int)
     {
-        _paragraphClickEvent.value = Event(index)
+        _paragraphPictureClickEvent.value = Event(index)
     }
 
     fun onLongClickParagraphItem(index: Int)
@@ -67,8 +68,8 @@ class AddEditProjectViewModel(private val repository: ProjectsRepository) : Base
     fun addNewParagraph()
     {
         _paragraphs.value = _paragraphs.value?.apply {
-            add(ParagraphContent().withId("${_paragraphs.value?.size ?: 0 + 1}"))
-        } ?: mutableListOf(ParagraphContent().withId("0"))
+            add(ParagraphContent())
+        } ?: mutableListOf(ParagraphContent())
     }
 
     fun saveProject(themeId: String, categoryId: String, projectToUpdateId: String?, newProject: Project, photoRef: String?)
@@ -82,14 +83,39 @@ class AddEditProjectViewModel(private val repository: ProjectsRepository) : Base
             {
                 photoRef?.let {
                     val photoResult = repository.uploadProjectImage(themeId, categoryId, result.data, photoRef)
-                    if (photoResult is Success)
-                        _loading.value = false
-                    else
+                    if (photoResult is Error)
                         showMessage(R.string.add_edit_project_view_model_project_upload_img_error)
-                } ?: _loading.apply { this.value = false }
+                }
+
+                newProject.content.forEach { content ->
+                    content.localPostImage?.let { imgRef ->
+                        val contentImgResult = repository.uploadContentImage(themeId, categoryId, result.data, content.index, imgRef)
+                        if (contentImgResult is Error)
+                        {
+                            showMessage(R.string.add_edit_project_view_model_project_upload_img_content_error)
+                            return@forEach
+                        }
+                    }
+                }
             }
             else
                 showMessage(R.string.add_edit_project_view_model_project_insert_error)
+            _loading.value = false
+        }
+    }
+
+    fun updateParagraphPicture(index: Int, photoRef: String)
+    {
+        _paragraphs.value?.let {
+            val newParagraphContent = it[index].copy(
+                postTitle = it[index].postTitle,
+                postContentText = it[index].postContentText,
+                postImage = it[index].postImage,
+                index = index,
+                localPostImage = photoRef
+            )
+            it[index] = newParagraphContent
+            _paragraphs.value = it
         }
     }
 }

@@ -45,6 +45,8 @@ class AddEditProjectFragment : Fragment()
     private var projectCreationDate = Timestamp(System.currentTimeMillis() / 1000, 0)
     private var projectPhotoPath: String? = null
     private var remotePhotoPath: String? = null
+    private var lastParagraphIndex: Int? = null
+    private var lastParagraphPhotoPath: String? = null
 
     // =================================
     //        Superclass Methods
@@ -82,13 +84,17 @@ class AddEditProjectFragment : Fragment()
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
     {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == RC_IMAGE_CAPTURE_INTENT)
+        when (requestCode)
         {
-            if (resultCode == RESULT_OK)
+            RC_IMAGE_CAPTURE_PROJECTS_INTENT ->
             {
-                projectPhotoPath?.let {
-                    binding.addEditProjectFragmentImg.loadPhotoWithGlide(it)
-                }
+                if (resultCode == RESULT_OK)
+                    projectPhotoPath?.let { binding.addEditProjectFragmentImg.loadPhotoWithGlide(it) }
+            }
+            RC_IMAGE_CAPTURE_PARAGRAPHS_INTENT ->
+            {
+                if (resultCode == RESULT_OK && lastParagraphIndex != null && lastParagraphPhotoPath != null)
+                    viewModel.updateParagraphPicture(lastParagraphIndex!!, lastParagraphPhotoPath!!)
             }
         }
     }
@@ -120,8 +126,11 @@ class AddEditProjectFragment : Fragment()
     private fun configureViewModel()
     {
         viewModel.message.observe(viewLifecycleOwner, EventObserver { binding.root.snackBar(getString(it)) })
-        viewModel.paragraphClickEvent.observe(viewLifecycleOwner, EventObserver { toast("Paragraph click") })
         viewModel.paragraphLongClickEvent.observe(viewLifecycleOwner, EventObserver { toast("Paragraph long click") })
+        viewModel.paragraphPictureClickEvent.observe(viewLifecycleOwner, EventObserver {
+            launchCamera(RC_IMAGE_CAPTURE_PARAGRAPHS_INTENT, false)
+            lastParagraphIndex = it
+        })
         viewModel.project.observe(viewLifecycleOwner, Observer {
             it?.let { project ->
                 projectCreationDate = project.createdAt
@@ -143,7 +152,7 @@ class AddEditProjectFragment : Fragment()
                 title = "",
                 description = "",
                 createdAt = projectCreationDate,
-                content = mutableListOf(ParagraphContent().withId("0"))
+                content = mutableListOf(ParagraphContent())
             )
         )
     }
@@ -151,7 +160,7 @@ class AddEditProjectFragment : Fragment()
     private fun configureBinding()
     {
         binding.viewModel = viewModel
-        binding.addEditProjectFragmentImg.setOnClickListener { launchCamera() }
+        binding.addEditProjectFragmentImg.setOnClickListener { launchCamera(RC_IMAGE_CAPTURE_PROJECTS_INTENT, true) }
     }
 
     private fun configureRecyclerView()
@@ -232,7 +241,7 @@ class AddEditProjectFragment : Fragment()
             binding.root.snackBar(getString(R.string.add_edit_project_fragment_required_field_msg_snack_bar))
     }
 
-    private fun launchCamera()
+    private fun launchCamera(requestCode: Int, origin: Boolean)
     {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             takePictureIntent.resolveActivity(requireActivity().packageManager)?.also {
@@ -252,14 +261,17 @@ class AddEditProjectFragment : Fragment()
                 }
 
                 photoFile?.also { file ->
-                    projectPhotoPath = file.absolutePath
+                    if (origin)
+                        projectPhotoPath = file.absolutePath
+                    else
+                        lastParagraphPhotoPath = file.absolutePath
                     val uri = FileProvider.getUriForFile(
                         requireActivity().applicationContext,
                         requireActivity().getString(R.string.file_provider_authority),
                         file
                     )
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
-                    startActivityForResult(takePictureIntent, RC_IMAGE_CAPTURE_INTENT)
+                    startActivityForResult(takePictureIntent, requestCode)
                 }
             }
         }

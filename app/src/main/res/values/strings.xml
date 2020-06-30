@@ -41,6 +41,7 @@
     <string name="add_edit_project_view_model_project_fetch_error">An error occurred when fetching this project</string>
     <string name="add_edit_project_view_model_project_insert_error">An error occurred when saving this project</string>
     <string name="add_edit_project_view_model_project_upload_img_error">An error occurred when uploading project image</string>
+    <string name="add_edit_project_view_model_project_upload_img_content_error">An error occurred when uploading content image</string>
     <string name="add_edit_project_view_model_project_insert_no_project_to_save">No project to save</string>
     <string name="add_edit_project_fragment_title">Identification</string>
     <string name="add_edit_project_fragment_title_hint">Project title</string>
