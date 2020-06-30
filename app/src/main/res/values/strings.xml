@@ -2,6 +2,19 @@
     <string name="app_name">Portfolio</string>
     <string name="file_provider_authority" translatable="false">com.skichrome.portfolio.fileprovider</string>
 
+    <!-- Navigation -->
+    <string name="navigation_fragment_title_home">Home</string>
+    <string name="navigation_fragment_title_profile">Profile</string>
+    <string name="navigation_fragment_title_themes_list">Themes</string>
+    <string name="navigation_fragment_title_category_list">Categories</string>
+    <string name="navigation_fragment_title_project_list">Projects</string>
+    <string name="navigation_fragment_title_new_project_form">New Project</string>
+    <string name="navigation_fragment_title_new_category_form">New Category</string>
+    <string name="navigation_fragment_title_new_theme_form">New theme</string>
+    <string name="navigation_fragment_title_edit_project_form">Edit Project</string>
+    <string name="navigation_fragment_title_edit_category_form">Edit Category</string>
+    <string name="navigation_fragment_title_edit_theme_form">Edit theme</string>
+
     <!-- Menu -->
     <string name="menu_item_new_paragraph">New paragraph</string>
     <string name="menu_item_logout">Logout</string>
@@ -47,7 +60,7 @@
     <string name="add_edit_project_fragment_title_hint">Project title</string>
     <string name="add_edit_project_fragment_description_hint">Project description</string>
     <string name="add_edit_project_fragment_img_content_desc">Project main picture</string>
-    <string name="add_edit_project_fragment_img_alt_hint">image alt</string>
+    <string name="add_edit_project_fragment_img_alt_hint">Project image alt</string>
     <string name="add_edit_project_fragment_created_hint">Creation date</string>
     <string name="add_edit_project_fragment_btn_set_img">Set</string>
     <string name="add_edit_project_fragment_required_field_msg">Required field</string>
@@ -63,11 +76,24 @@
     <string name="add_edit_category_fragment_category_name_hint">Category title</string>
     <string name="add_edit_category_fragment_category_content_hint">Category content</string>
     <string name="add_edit_category_fragment_category_img_content_desc">Insert new category image</string>
-    <string name="add_edit_category_fragment_category_img_alt_hint">Category image</string>
+    <string name="add_edit_category_fragment_category_img_alt_hint">Category image alt</string>
     <string name="add_edit_category_view_model_category_fetch_error">An error occurred when fetching this category</string>
     <string name="add_edit_category_view_model_category_upload_img_error">An error occurred when uploading this category image</string>
     <string name="add_edit_category_view_model_category_insert_error">An error occurred when saving this category</string>
     <string name="add_edit_category_fragment_required_field_msg">Required field</string>
     <string name="add_edit_category_fragment_required_field_msg_no_picture_set">Please add an image to this category</string>
     <string name="add_edit_category_fragment_required_field_msg_snack_bar">Please fill all required field</string>
+
+    <!-- Add Edit Category -->
+    <string name="add_edit_theme_view_model_theme_fetch_error">An error occurred when fetching this theme</string>
+    <string name="add_edit_theme_view_model_theme_upload_img_error">An error occurred when uploading this theme image</string>
+    <string name="add_edit_theme_view_model_theme_insert_error">An error occurred when saving this theme</string>
+    <string name="add_edit_theme_fragment_required_field_msg">Required field</string>
+    <string name="add_edit_theme_fragment_required_field_msg_no_picture_set">Please add an image to this theme</string>
+    <string name="add_edit_theme_fragment_required_field_msg_snack_bar">Please fill all required field</string>
+    <string name="add_edit_theme_fragment_content_title">Content</string>
+    <string name="add_edit_theme_fragment_name_hint">Theme name</string>
+    <string name="add_edit_theme_fragment_description_hint">Theme description</string>
+    <string name="add_edit_theme_fragment_img_content_desc">Add a theme image</string>
+    <string name="add_edit_theme_fragment_img_alt_hint">Theme image alt</string>
 </resources>

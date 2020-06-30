@@ -12,7 +12,6 @@ import com.skichrome.portfolio.databinding.FragmentThemesBinding
 import com.skichrome.portfolio.util.AutoClearedValue
 import com.skichrome.portfolio.util.EventObserver
 import com.skichrome.portfolio.util.snackBar
-import com.skichrome.portfolio.util.toast
 import com.skichrome.portfolio.view.ui.ThemesAdapter
 import com.skichrome.portfolio.viewmodel.ThemesViewModel
 import com.skichrome.portfolio.viewmodel.ThemesViewModelFactory
@@ -56,7 +55,8 @@ class ThemesFragment : Fragment()
     {
         viewModel.message.observe(viewLifecycleOwner, EventObserver { binding.root.snackBar(getString(it)) })
         viewModel.themeClickEvent.observe(viewLifecycleOwner, EventObserver { navigateToCategoriesFragment(it) })
-        viewModel.themeLongClickEvent.observe(viewLifecycleOwner, EventObserver { editOrDeleteTheme(it) })
+        viewModel.themeLongClickEvent.observe(viewLifecycleOwner, EventObserver { navigateToAddEditThemeFragment(it) })
+        viewModel.loadThemes()
     }
 
     private fun configureBinding()
@@ -72,16 +72,18 @@ class ThemesFragment : Fragment()
 
     private fun configureFAB()
     {
-    }
-
-    private fun editOrDeleteTheme(themeId: String)
-    {
-        toast("Feature not implemented, theme id : $themeId")
+        binding.themeFragmentFab.setOnClickListener { navigateToAddEditThemeFragment() }
     }
 
     private fun navigateToCategoriesFragment(themeId: String)
     {
         val opts = ThemesFragmentDirections.actionThemesFragmentToCategoriesFragment(themeId)
+        findNavController().navigate(opts)
+    }
+
+    private fun navigateToAddEditThemeFragment(themeId: String? = null)
+    {
+        val opts = ThemesFragmentDirections.actionThemesFragmentToAddEditThemesFragment(themeId)
         findNavController().navigate(opts)
     }
 }

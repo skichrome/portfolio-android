@@ -175,7 +175,7 @@ class AddEditProjectFragment : Fragment()
 
     private fun configureUI(menuItemVisibility: Boolean = true)
     {
-        activity?.apply {
+        activity?.run {
             toolbar?.menu?.findItem(R.id.activity_main_menu_new_paragraph)?.isVisible = menuItemVisibility
             toolbar?.setOnMenuItemClickListener {
                 when (it.itemId)
@@ -197,6 +197,10 @@ class AddEditProjectFragment : Fragment()
                 }
                 return@setOnMenuItemClickListener true
             }
+
+            toolbar?.title = args.projectId?.let {
+                getString(R.string.navigation_fragment_title_edit_project_form)
+            } ?: getString(R.string.navigation_fragment_title_new_project_form)
         }
 
         requiredFields = listOf(

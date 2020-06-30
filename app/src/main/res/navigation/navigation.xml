@@ -9,7 +9,7 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.skichrome.portfolio.view.fragments.HomeFragment"
-        android:label="Home"
+        android:label="@string/navigation_fragment_title_home"
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_profileFragment"
@@ -22,23 +22,26 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.skichrome.portfolio.view.fragments.ProfileFragment"
-        android:label="ProfileFragment"
+        android:label="@string/navigation_fragment_title_profile"
         tools:layout="@layout/fragment_profile" />
 
     <fragment
         android:id="@+id/themesFragment"
         android:name="com.skichrome.portfolio.view.fragments.ThemesFragment"
-        android:label="ThemesFragment"
+        android:label="@string/navigation_fragment_title_themes_list"
         tools:layout="@layout/fragment_themes">
         <action
             android:id="@+id/action_themesFragment_to_categoriesFragment"
             app:destination="@id/categoriesFragment" />
+        <action
+            android:id="@+id/action_themesFragment_to_addEditThemesFragment"
+            app:destination="@id/addEditThemesFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/categoriesFragment"
         android:name="com.skichrome.portfolio.view.fragments.CategoriesFragment"
-        android:label="CategoriesFragment"
+        android:label="@string/navigation_fragment_title_category_list"
         tools:layout="@layout/fragment_categories">
         <argument
             android:name="themeId"
@@ -54,7 +57,7 @@
     <fragment
         android:id="@+id/projectsFragment"
         android:name="com.skichrome.portfolio.view.fragments.ProjectsFragment"
-        android:label="ProjectsFragment"
+        android:label="@string/navigation_fragment_title_project_list"
         tools:layout="@layout/fragment_projects">
         <argument
             android:name="themeId"
@@ -70,7 +73,7 @@
     <fragment
         android:id="@+id/addEditProjectFragment"
         android:name="com.skichrome.portfolio.view.fragments.AddEditProjectFragment"
-        android:label="AddEditProjectFragment"
+        android:label="@string/navigation_fragment_title_new_project_form"
         tools:layout="@layout/fragment_add_edit_project">
         <argument
             android:name="themeId"
@@ -87,13 +90,25 @@
     <fragment
         android:id="@+id/addEditCategoryFragment"
         android:name="com.skichrome.portfolio.view.fragments.AddEditCategoryFragment"
-        android:label="AddEditCategoryFragment"
+        android:label="@string/navigation_fragment_title_new_category_form"
         tools:layout="@layout/fragment_add_edit_category">
         <argument
             android:name="themeId"
             app:argType="string" />
         <argument
             android:name="categoryId"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addEditThemesFragment"
+        android:name="com.skichrome.portfolio.view.fragments.AddEditThemesFragment"
+        android:label="@string/navigation_fragment_title_new_theme_form"
+        tools:layout="@layout/fragment_add_edit_themes">
+
+        <argument
+            android:name="themeId"
             app:argType="string"
             app:nullable="true" />
     </fragment>

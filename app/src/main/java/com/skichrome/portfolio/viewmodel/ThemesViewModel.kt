@@ -23,11 +23,6 @@ class ThemesViewModel(private val repository: ThemesRepository) : BaseViewModel(
     private val _themeLongClickEvent = MutableLiveData<Event<String>>()
     val themeLongClickEvent: LiveData<Event<String>> = _themeLongClickEvent
 
-    init
-    {
-        loadThemes()
-    }
-
     // =================================
     //              Methods
     // =================================
@@ -42,7 +37,7 @@ class ThemesViewModel(private val repository: ThemesRepository) : BaseViewModel(
         _themeLongClickEvent.value = Event(themeId)
     }
 
-    private fun loadThemes()
+    fun loadThemes()
     {
         viewModelScope.launch {
             val themesResults = repository.getAllThemes()
