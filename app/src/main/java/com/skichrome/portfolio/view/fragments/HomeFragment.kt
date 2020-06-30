@@ -34,6 +34,7 @@ class HomeFragment : Fragment()
 
     private lateinit var binding: FragmentHomeBinding
     private val viewModel by viewModels<HomeViewModel> { HomeViewModelFactory((requireActivity().application as PortfolioApplication).homeRepository) }
+    private var currentUserId: String? = null
 
     // =================================
     //        Superclass Methods
@@ -88,8 +89,13 @@ class HomeFragment : Fragment()
     private fun configureViewModel()
     {
         viewModel.message.observe(viewLifecycleOwner, EventObserver { binding.root.snackBar(getString(it)) })
-        viewModel.user.observe(viewLifecycleOwner, Observer { loadUserPicture(it?.photoReference?.let { photoRef -> Uri.parse(photoRef) }) })
-        viewModel.loadUserInfo()
+        viewModel.user.observe(viewLifecycleOwner, Observer {
+            it?.let { user ->
+                loadUserPicture(user.photoReference?.let { photoRef -> Uri.parse(photoRef) })
+                currentUserId = user.id
+            }
+        })
+        viewModel.loadFirstUserAvailable()
     }
 
     private fun configureBinding()
@@ -109,7 +115,8 @@ class HomeFragment : Fragment()
 
     private fun navigateToProfileFragment()
     {
-        findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
+        val opts = HomeFragmentDirections.actionHomeFragmentToProfileFragment(currentUserId)
+        findNavController().navigate(opts)
     }
 
     private fun navigateToThemesFragment()

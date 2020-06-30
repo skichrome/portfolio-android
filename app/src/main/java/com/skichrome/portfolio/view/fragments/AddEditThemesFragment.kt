@@ -74,16 +74,16 @@ class AddEditThemesFragment : Fragment()
 
     override fun onSaveInstanceState(outState: Bundle)
     {
-        outState.putString(CURRENT_PROJECT_PICTURE_PATH_REF, localImagePath)
-        outState.putString(CURRENT_REMOTE_CATEGORY_PICTURE_PATH_REF, remoteImagePath)
+        outState.putString(CURRENT_THEME_PICTURE_PATH_REF, localImagePath)
+        outState.putString(CURRENT_REMOTE_THEME_PICTURE_PATH_REF, remoteImagePath)
         super.onSaveInstanceState(outState)
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?)
     {
         super.onViewStateRestored(savedInstanceState)
-        savedInstanceState?.getString(CURRENT_CATEGORY_PICTURE_PATH_REF)?.let { localImagePath = it }
-        savedInstanceState?.getString(CURRENT_REMOTE_CATEGORY_PICTURE_PATH_REF)?.let { remoteImagePath = it }
+        savedInstanceState?.getString(CURRENT_THEME_PICTURE_PATH_REF)?.let { localImagePath = it }
+        savedInstanceState?.getString(CURRENT_REMOTE_THEME_PICTURE_PATH_REF)?.let { remoteImagePath = it }
 
         remoteImagePath?.let {
             binding.addEditThemeFragmentImage.loadPhotoWithGlide(it)

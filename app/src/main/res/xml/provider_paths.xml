@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <paths>
+    <!-- Contain the pictures for user -->
+    <external-files-path
+        name="usersMedias"
+        path="Pictures/users_media/" />
+
     <!-- Contain the pictures for themes -->
     <external-files-path
         name="themesMedias"

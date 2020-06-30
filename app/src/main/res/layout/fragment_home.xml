@@ -18,8 +18,9 @@
 
         <ImageView
             android:id="@+id/home_fragment_user_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginBottom="@dimen/img_default_margin"
             android:contentDescription="@string/home_fragment_profile_picture_content_desc"
             android:src="@mipmap/ic_launcher"
             app:layout_constraintBottom_toTopOf="@+id/home_fragment_guideline"
@@ -38,6 +39,7 @@
             style="@style/TextAppearance.AppCompat.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/tv_input_margin"
             android:text='@{viewModel.user.firstName.concat(" ").concat(viewModel.user.lastName)}'
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

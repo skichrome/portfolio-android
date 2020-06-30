@@ -20,13 +20,13 @@ class HomeViewModel(private val repository: HomeRepository) : BaseViewModel()
     //              Methods
     // =================================
 
-    fun loadUserInfo()
+    fun loadFirstUserAvailable()
     {
         viewModelScope.launch {
-            val userResult = repository.getUserInfo()
-            if (userResult is Success)
+            val users = repository.getAllUsers()
+            if (users is Success && users.data.isNotEmpty())
             {
-                _user.value = userResult.data
+                _user.value = users.data.first()
                 showMessage(R.string.home_view_model_user_fetch_success)
             }
             else

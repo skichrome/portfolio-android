@@ -54,7 +54,7 @@ class RemoteThemesSource(private val dispatcher: CoroutineDispatcher = Dispatche
             val result = themeReference.document(themeId).get().await()
                 .let {
                     it.toObject(Theme::class.java)?.withId<Theme>(it.id)
-                        ?: return@withContext RequestResults.Error(FirebaseFirestoreClassCastException("Could not cast data object to Project class"))
+                        ?: return@withContext RequestResults.Error(FirebaseFirestoreClassCastException("Could not cast data object to Theme class"))
                 }
             return@withContext Success(result)
         }

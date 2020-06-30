@@ -74,7 +74,7 @@ class AddEditCategoryFragment : Fragment()
 
     override fun onSaveInstanceState(outState: Bundle)
     {
-        outState.putString(CURRENT_PROJECT_PICTURE_PATH_REF, localImgPath)
+        outState.putString(CURRENT_CATEGORY_PICTURE_PATH_REF, localImgPath)
         outState.putString(CURRENT_REMOTE_CATEGORY_PICTURE_PATH_REF, remoteImgPath)
         super.onSaveInstanceState(outState)
     }

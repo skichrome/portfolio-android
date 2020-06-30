@@ -23,7 +23,12 @@
         android:id="@+id/profileFragment"
         android:name="com.skichrome.portfolio.view.fragments.ProfileFragment"
         android:label="@string/navigation_fragment_title_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile">
+        <argument
+            android:name="userId"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 
     <fragment
         android:id="@+id/themesFragment"

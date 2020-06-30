@@ -57,7 +57,7 @@ class RemoteCategoriesSource(private val dispatcher: CoroutineDispatcher = Dispa
                 .await()
                 .let {
                     it.toObject(Category::class.java)?.withId<Category>(it.id)
-                        ?: return@withContext Error(FirebaseFirestoreClassCastException("Could not cast data object to Project class"))
+                        ?: return@withContext Error(FirebaseFirestoreClassCastException("Could not cast data object to Category class"))
                 }
             Success(result)
         }

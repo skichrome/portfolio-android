@@ -34,6 +34,9 @@
     <string name="profile_fragment_hint_email">Email</string>
     <string name="profile_fragment_hint_phone">Phone Number</string>
     <string name="profile_fragment_hint_summary">Summary</string>
+    <string name="edit_profile_fragment_required_field_msg">Required field</string>
+    <string name="edit_profile_fragment_required_field_msg_no_picture_set">Please add an image to the profile</string>
+    <string name="edit_profile_fragment_required_field_msg_snack_bar">Please fill all required field</string>
 
     <!-- Theme -->
     <string name="themes_fragment_themes_fetch_success">Successfully fetched themes</string>
