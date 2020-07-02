@@ -15,7 +15,7 @@
 
     <dimen name="fab_margin">24dp</dimen>
     <dimen name="rv_items_layout_padding">8dp</dimen>
-    <dimen name="rv_items_img_size">80dp</dimen>
+    <dimen name="rv_items_img_size">85dp</dimen>
     <dimen name="img_default_margin">16dp</dimen>
     <dimen name="fab_not_hide_content">100dp</dimen>
 </resources>

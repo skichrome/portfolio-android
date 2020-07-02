@@ -1,6 +1,7 @@
 package com.skichrome.portfolio.view.fragments
 
 import android.app.Activity.RESULT_OK
+import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -92,6 +93,22 @@ class AddEditProjectFragment : Fragment()
                 if (resultCode == RESULT_OK && lastParagraphIndex != null && lastParagraphPhotoPath != null)
                     viewModel.updateParagraphPicture(lastParagraphIndex!!, lastParagraphPhotoPath!!)
             }
+            RC_IMAGE_PICKER_PROJECTS ->
+            {
+                if (resultCode == RESULT_OK)
+                {
+                    projectPhotoPath = data?.data
+                    projectPhotoPath?.let { binding.addEditProjectFragmentImg.loadPhotoWithGlide(it) }
+                }
+            }
+            RC_IMAGE_PICKER_PROJECTS_PARAGRAPHS ->
+            {
+                if (resultCode == RESULT_OK && lastParagraphIndex != null)
+                {
+                    lastParagraphPhotoPath = data?.data
+                    viewModel.updateParagraphPicture(lastParagraphIndex!!, lastParagraphPhotoPath!!)
+                }
+            }
         }
     }
 
@@ -124,8 +141,7 @@ class AddEditProjectFragment : Fragment()
         viewModel.message.observe(viewLifecycleOwner, EventObserver { binding.root.snackBar(getString(it)) })
         viewModel.paragraphLongClickEvent.observe(viewLifecycleOwner, EventObserver { toast("Paragraph long click") })
         viewModel.paragraphPictureClickEvent.observe(viewLifecycleOwner, EventObserver {
-            lastParagraphPhotoPath = launchCamera(RC_IMAGE_CAPTURE_PARAGRAPHS_INTENT, PICTURES_PROJECT_FOLDER_NAME)
-            lastParagraphIndex = it
+            showImgAlertDialog(false, it)
         })
         viewModel.project.observe(viewLifecycleOwner, Observer {
             it?.let { project ->
@@ -156,9 +172,7 @@ class AddEditProjectFragment : Fragment()
     private fun configureBinding()
     {
         binding.viewModel = viewModel
-        binding.addEditProjectFragmentImg.setOnClickListener {
-            projectPhotoPath = launchCamera(RC_IMAGE_CAPTURE_PROJECTS_INTENT, PICTURES_PROJECT_FOLDER_NAME)
-        }
+        binding.addEditProjectFragmentImg.setOnClickListener { showImgAlertDialog(true) }
     }
 
     private fun configureRecyclerView()
@@ -207,6 +221,37 @@ class AddEditProjectFragment : Fragment()
             binding.addEditProjectFragmentProjectDescriptionEditText,
             binding.addEditProjectFragmentImgAltEditText
         )
+    }
+
+    private fun showImgAlertDialog(origin: Boolean, idx: Int = -1)
+    {
+        activity?.let {
+            AlertDialog.Builder(it).apply {
+                setTitle(R.string.add_edit_project_fragment_alert_dialog_title)
+                setMessage(R.string.add_edit_project_fragment_alert_dialog_content)
+                setPositiveButton(R.string.add_edit_project_fragment_alert_dialog_positive_btn) { _, _ ->
+                    if (origin)
+                        openImagePicker(binding.root, RC_IMAGE_PICKER_PROJECTS)
+                    else
+                    {
+                        openImagePicker(binding.root, RC_IMAGE_PICKER_PROJECTS_PARAGRAPHS)
+                        lastParagraphIndex = idx
+                    }
+                }
+                setNegativeButton(R.string.add_edit_project_fragment_alert_dialog_neutral_btn) { _, _ ->
+                    if (origin)
+                        projectPhotoPath = launchCamera(RC_IMAGE_CAPTURE_PROJECTS_INTENT, PICTURES_PROJECT_FOLDER_NAME)
+                    else
+                    {
+                        lastParagraphPhotoPath = launchCamera(RC_IMAGE_CAPTURE_PARAGRAPHS_INTENT, PICTURES_PROJECT_FOLDER_NAME)
+                        lastParagraphIndex = idx
+                    }
+                }
+                setNeutralButton(R.string.add_edit_project_fragment_alert_dialog_negative_btn, null)
+            }
+                .create()
+                .show()
+        }
     }
 
     private fun saveData()

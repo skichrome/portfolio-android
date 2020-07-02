@@ -72,6 +72,11 @@
     <string name="add_edit_project_fragment_required_field_msg_no_picture_set">Please add an image</string>
     <string name="add_edit_project_fragment_required_field_msg_snack_bar">Please fill all required field</string>
     <string name="add_edit_project_fragment_post_content_title">Post content</string>
+    <string name="add_edit_project_fragment_alert_dialog_title">Project picture</string>
+    <string name="add_edit_project_fragment_alert_dialog_content">Do you want to take a new picture or import picture from storage ?</string>
+    <string name="add_edit_project_fragment_alert_dialog_positive_btn">Storage</string>
+    <string name="add_edit_project_fragment_alert_dialog_neutral_btn">Camera</string>
+    <string name="add_edit_project_fragment_alert_dialog_negative_btn">Cancel</string>
     <string name="rv_item_add_edit_fragment_paragraph_content_title_hint">Post title</string>
     <string name="rv_item_add_edit_fragment_paragraph_content_hint">Post content</string>
 
@@ -89,7 +94,7 @@
     <string name="add_edit_category_fragment_required_field_msg_no_picture_set">Please add an image to this category</string>
     <string name="add_edit_category_fragment_required_field_msg_snack_bar">Please fill all required field</string>
 
-    <!-- Add Edit Category -->
+    <!-- Add Edit Theme -->
     <string name="add_edit_theme_view_model_theme_fetch_error">An error occurred when fetching this theme</string>
     <string name="add_edit_theme_view_model_theme_upload_img_error">An error occurred when uploading this theme image</string>
     <string name="add_edit_theme_view_model_theme_insert_error">An error occurred when saving this theme</string>
